@@ -9,6 +9,7 @@ public class Set {
     private Roles[] roles;
 
 
+
     public static void finishScene(){
         return;
     }
@@ -16,7 +17,4 @@ public class Set {
     public static void finishShot(){
         return;
     }
-
-    
-
 }
