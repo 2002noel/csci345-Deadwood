@@ -9,4 +9,8 @@ public class Die {
     
     public void setRank(int rank) {
     }
+    
+    public int rollDie() {
+        return -1;
+    }
 }
