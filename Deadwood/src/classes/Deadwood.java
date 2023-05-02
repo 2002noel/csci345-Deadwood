@@ -24,16 +24,13 @@ public class Deadwood {
         return;
     }
 
-    public static void upgradeRank(){
+    public static void upgradeRank(Player ply) {
         return;
     }
 
     public static void startGame(){
         return;
     }
-
-    
-
 }
 
 
