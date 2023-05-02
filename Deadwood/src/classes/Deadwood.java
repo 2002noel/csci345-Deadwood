@@ -8,6 +8,7 @@ public class Deadwood {
     private int day;
     public Die die;
     public Board board;
+    private Banker banker;
 
 
     public static void newDay(){
