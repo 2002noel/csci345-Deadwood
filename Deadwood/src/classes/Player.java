@@ -8,7 +8,7 @@ public class Player {
     private int money;
     private int chips;
     private Set location;
-    private Role role;
+    private Roles role;
     
     public boolean move() {
         return false;
