@@ -17,8 +17,6 @@ public class Set {
         return;
     }
 
-    private static void payout(){
-        return;
-    }
+    
 
 }
