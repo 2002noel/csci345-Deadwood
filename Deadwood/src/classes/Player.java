@@ -5,6 +5,7 @@ public class Player {
     private int rank;
     private int money;
     private int chips;
+    private Set location;
     
     public boolean move() {
         return false;
