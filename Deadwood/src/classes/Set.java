@@ -10,11 +10,11 @@ public class Set {
 
 
 
-    public static void finishScene(){
+    public void finishScene(){
         return;
     }
 
-    public static void finishShot(){
+    public void finishShot(){
         return;
     }
 }
