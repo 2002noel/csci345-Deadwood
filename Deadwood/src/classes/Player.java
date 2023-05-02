@@ -1,11 +1,14 @@
 package classes;
 
+import javax.management.relation.Role;
+
 public class Player {
     private int credits;
     private int rank;
     private int money;
     private int chips;
     private Set location;
+    private Role role;
     
     public boolean move() {
         return false;
