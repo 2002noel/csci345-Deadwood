@@ -3,14 +3,6 @@ package classes;
 public class System {
     //this class vaildates moves and checks for win conditions
     //this class also handles the game loop
-    private Player[] players;
-    private int day;
-    public Die die;
-    public Board board;
-    private Banker banker;
-
-    
-    
 
 
     public static boolean upgradeRank(Player ply, int rank, boolean withcredits){
@@ -67,4 +59,15 @@ public class System {
 
         return false;
     }
+
+
+    public static boolean move(Player ply, Set set){
+        //check if the player is at the casting office
+        //check if the player has enough money to move
+        //if the player has enough money, move the player
+        //else return false
+        return false;
+    }
+
+
 }
