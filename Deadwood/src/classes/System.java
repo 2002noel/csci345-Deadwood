@@ -70,5 +70,21 @@ public class System {
         return false;
     }
 
-
+    public static boolean work(Player ply, Set set){
+        //check if the player is at the casting office
+        //check if the player has enough money to move
+        //if the player has enough money, move the player
+        //else return false
+        
+        return false;
+    }
+    
+    public static boolean takeRole(Player ply, Set set, Scene scene){
+        //check if the player is at the casting office
+        //check if the player has enough money to move
+        //if the player has enough money, move the player
+        //else return false
+        
+        return false;
+    }
 }
