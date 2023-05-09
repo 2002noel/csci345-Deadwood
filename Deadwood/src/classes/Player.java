@@ -14,18 +14,19 @@ public class Player {
         return dice.rollDie();
     };
 
-    public boolean move() {
+    public boolean move(Set set) {
+        // verify that set is adjacent to current set
+        return System.move(this, set);
     };
 
-    public boolean work() {
-        return false;
+    public boolean work(Set set) {
+        return System.work(this, set);
     };
+    
     public boolean upgradeRank(int rank) {
         //call the Deadwood method upgradeRank
         return System.upgradeRank(this, rank);
     };
-
-
 
     public int calcScore() {
         return -1;
@@ -43,11 +44,25 @@ public class Player {
         return money;
     };
     
-    public void addChips(int chips) {};
-    public void removeChips(int chips) {};
-    public void addCredits(int credits) {};
-    public void removeCredits(int credits) {};
-    public void takeRole(Set set, Scene scene) {};
-    public void addMoney(int money) {};
-    public void removeMoney(int money) {};
+    public void addChips(int chips) {
+        this.chips += chips;
+    };
+    public void removeChips(int chips) {
+        this.chips -= chips;
+    };
+    public void addCredits(int credits) {
+        this.credits += credits;
+    };
+    public void removeCredits(int credits) {
+        this.credits -= credits;
+    };
+    public boolean takeRole(Set set, Scene scene) {
+        return System.takeRole(this, set, scene);
+    };
+    public void addMoney(int money) {
+        this.money += money;
+    };
+    public void removeMoney(int money) {
+        this.money -= money;
+    };
 }
