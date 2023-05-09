@@ -23,9 +23,9 @@ public class Player {
         return System.work(this, set);
     };
     
-    public boolean upgradeRank(int rank) {
+    public boolean upgradeRank(int rank, boolean withcredits) {
         //call the Deadwood method upgradeRank
-        return System.upgradeRank(this, rank);
+        return System.upgradeRank(this, rank, withcredits);
     };
 
     public int calcScore() {
