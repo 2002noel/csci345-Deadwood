@@ -1,6 +1,5 @@
 package classes;
 
-import javax.management.relation.Role;
 
 public class Player {
     private int credits;
@@ -22,10 +21,26 @@ public class Player {
         return false;
     };
     public boolean upgradeRank(int rank) {
-        return false;
+        //call the Deadwood method upgradeRank
+        return System.upgradeRank(this, rank);
     };
+
+
+
     public int calcScore() {
         return -1;
+    };
+
+    public Die getDice() {
+        return dice;
+    };
+
+    public int getCredits() {
+        return credits;
+    };
+
+    public int getMoney() {
+        return money;
     };
     
     public void addChips(int chips) {};
