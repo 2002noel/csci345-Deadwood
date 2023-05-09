@@ -1,5 +1,7 @@
 package classes;
 
+import java.util.Random;
+
 public class Die {
     private int rank;
     
@@ -8,9 +10,15 @@ public class Die {
     }
     
     public void setRank(int rank) {
+        this.rank = rank;
     }
     
     public int rollDie() {
-        return -1;
+        //roll a random number from 1 to 6
+        
+        Random rand = new Random();
+        int roll = rand.nextInt(6) + 1;
+        return roll;
+
     }
 }

@@ -10,9 +10,14 @@ public class Player {
     private Set location;
     private Roles role;
     
-    public boolean move() {
-        return false;
+
+    int rollDice() {
+        return dice.rollDie();
     };
+
+    public boolean move() {
+    };
+
     public boolean work() {
         return false;
     };
