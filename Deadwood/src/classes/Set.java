@@ -7,10 +7,12 @@ public class Set {
     private String name;
     private Set adjacentSet;
     private Roles[] roles;
+    
 
 
 
     public void finishScene(){
+        
         return;
     }
 
