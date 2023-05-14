@@ -1,6 +1,6 @@
 package classes;
 
-public class System {
+public class Systems {
     //this class vaildates moves and checks for win conditions
     //this class also handles the game loop
 
@@ -16,6 +16,9 @@ public class System {
 
         //if the player has enough money or credits, upgrade the player
         //else return false
+        if(ply.getlocation().getName() != "Casting Office"){
+            return false;
+        }
 
         int costincredits = 0;
         int costindollars = 0;
@@ -62,21 +65,42 @@ public class System {
 
 
     public static boolean move(Player ply, Set set){
-        //check if the player is at the casting office
-        //check if the player has enough money to move
-        //if the player has enough money, move the player
+        //move the player to the set and change the location
+        //check if the set is adjacent to the player's current location
+        //if the set is adjacent, move the player
         //else return false
+
+        if(set.isAdjacent(ply.getlocation())){
+            ply.setlocation(set);
+            return true;
+        }
+
+
         
         return false;
     }
 
     public static boolean work(Player ply, Set set){
-        //check if the player is at the casting office
-        //check if the player has enough money to move
-        //if the player has enough money, move the player
-        //else return false
+        //check if the player is on a role
+
         
         return false;
+    }
+
+    public static boolean act(Player ply, int roll){
+        //check the budget of the scene
+        //check if the player is on a role
+        //if the roll is higher than the budget, pay players on the scene
+        //else pay nothing
+
+        if(ply.getlocation().getScene().getBudget() <= roll){
+            //pay players on the scene
+            return true;
+        }
+        else{
+            //pay nothing
+            return true;
+        }
     }
     
     public static boolean takeRole(Player ply, Set set, Scene scene){

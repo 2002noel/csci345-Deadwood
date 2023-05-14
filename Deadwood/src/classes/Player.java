@@ -1,4 +1,9 @@
 package classes;
+import java.util.*;
+import classes.Player;
+import java.io.*;
+import java.util.Scanner;
+import java.util.Random;
 
 
 public class Player {
@@ -11,7 +16,14 @@ public class Player {
     
 
     int rollDice() {
-        return dice.rollDie();
+        //if there are chips, add chips to roll, else just roll
+        if(chips > 0){
+            return dice.rollDie() + chips;
+        }
+        else{
+            return dice.rollDie();
+        }
+
     };
 
     public boolean move(Set set) {
@@ -19,13 +31,88 @@ public class Player {
         return System.move(this, set);
     };
 
-    public boolean work(Set set) {
-        return System.work(this, set);
+    public boolean useTurn(int choice) {
+        //if choice is 1, rehearse
+        //if choice is 2, act
+        //if choice is 3, upgrade
+        //if choice is 4, move
+        //if choice is 5, take role
+
+        if(choice == 1){
+            return rehearse();
+        }
+        else if(choice == 2){
+            return act();
+        }
+        else if(choice == 3){
+            //ask the player if they want to upgrade with credits or dollars
+            //if they choose credits, call upgradeRank with true
+            //if they choose dollars, call upgradeRank with false
+            System.out.println("Would you like to upgrade with credits or dollars?");
+            System.out.println("1. Credits");
+            System.out.println("2. Dollars");
+            Scanner sc = new Scanner(System.in);
+            int choice2 = sc.nextInt();
+            if(choice2 == 1){
+                //get the rank the player wants to upgrade to
+                System.out.println("What rank would you like to upgrade to?");
+                int rank = sc.nextInt();
+                return Systems.upgradeRank(this, rank, true);
+            }
+            else if(choice2 == 2){
+                //get the rank the player wants to upgrade to
+                System.out.println("What rank would you like to upgrade to?");
+                int rank = sc.nextInt();
+                return Systems.upgradeRank(this, rank, false);
+            }
+            else{
+                return false;
+            }
+        }
+        else if(choice == 4){
+            return move();
+        }
+        else if(choice == 5){
+            return takeRole();
+        }
+        else{
+            return false;
+        }
     };
+
+    public boolean rehearse() {
+        //add to chips and return true
+
+        //check if the player is on a role
+        if(role == null){
+            return false;
+        }
+        else{
+            //add to chips
+            chips++;
+            return true;
+        }
+        
+    };
+
+    public boolean act() {
+        //roll die and call Systems act 
+        //check if the player is on a role
+        if(role == null){
+            return false;
+        }
+        else{
+            //roll die
+            int roll = rollDice();
+            return Systems.act(this, roll);
+        }
+    };
+
+
     
     public boolean upgradeRank(int rank, boolean withcredits) {
         //call the Deadwood method upgradeRank
-        return System.upgradeRank(this, rank, withcredits);
+        return Systems.upgradeRank(this, rank, withcredits);
     };
 
     public int calcScore() {
@@ -64,5 +151,13 @@ public class Player {
     };
     public void removeMoney(int money) {
         this.money -= money;
+    };
+
+    public Set getlocation() {
+        return location;
+    };
+
+    public void setlocation(Set location) {
+        this.location = location;
     };
 }

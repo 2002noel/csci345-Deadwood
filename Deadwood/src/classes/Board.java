@@ -31,4 +31,26 @@ public class Board {
         
         return null;
     }
+
+    public void setSets(Set[] sets) {
+        this.sets = sets;
+    }
+
+    public Set[] getSets() {
+        return sets;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public void setLocation(int[] location) {
+        this.location = location;
+    }
+
+
 }
