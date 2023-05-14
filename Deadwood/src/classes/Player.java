@@ -2,8 +2,6 @@ package classes;
 import java.util.*;
 import classes.Player;
 import java.io.*;
-import java.util.Scanner;
-import java.util.Random;
 
 
 public class Player {
@@ -28,10 +26,10 @@ public class Player {
 
     public boolean move(Set set) {
         // verify that set is adjacent to current set
-        return System.move(this, set);
+        return Systems.move(this, set);
     };
 
-    public boolean useTurn(int choice) {
+    public boolean useTurn(int choice, Set set, Scene scene) {
         //if choice is 1, rehearse
         //if choice is 2, act
         //if choice is 3, upgrade
@@ -70,10 +68,10 @@ public class Player {
             }
         }
         else if(choice == 4){
-            return move();
+            return this.move(set);
         }
         else if(choice == 5){
-            return takeRole();
+            return takeRole(set, scene);
         }
         else{
             return false;
@@ -144,7 +142,7 @@ public class Player {
         this.credits -= credits;
     };
     public boolean takeRole(Set set, Scene scene) {
-        return System.takeRole(this, set, scene);
+        return Systems.takeRole(this, set, scene);
     };
     public void addMoney(int money) {
         this.money += money;
