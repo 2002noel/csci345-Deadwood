@@ -45,6 +45,7 @@ public class Set {
         this.adjacentSets = adjacentSet;
     }
 
+
     public Set[] getAdjacentSet(){
         return adjacentSets;
     }

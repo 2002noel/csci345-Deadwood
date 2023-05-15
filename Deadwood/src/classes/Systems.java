@@ -73,10 +73,7 @@ public class Systems {
         if(set.isAdjacent(ply.getlocation())){
             ply.setlocation(set);
             return true;
-        }
-
-
-        
+        }        
         return false;
     }
 
@@ -96,12 +93,13 @@ public class Systems {
             //pay players on the scene
             //call finish shot
             ply.getlocation().finishShot();
-            return true;
+            
         }
         else{
             //pay nothing
-            return true;
         }
+        return false;
+        //check how many scenes are left on the board, if there are 1 or less, end the day
     }
     
     public static boolean takeRole(Player ply){

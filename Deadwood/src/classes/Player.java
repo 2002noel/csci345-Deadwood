@@ -29,7 +29,7 @@ public class Player {
         return Systems.move(this, set);
     };
 
-    public boolean useTurn(int choice, Set set, Scene scene) {
+    public boolean useTurn(int choice) {
         //if choice is 1, rehearse
         //if choice is 2, act
         //if choice is 3, upgrade
@@ -68,10 +68,19 @@ public class Player {
             }
         }
         else if(choice == 4){
-            return this.move(set);
+            //show adjacent sets
+            System.out.println("Where would you like to move?");
+            for(int i = 0; i < this.location.getAdjacentSet().length; i++){
+                System.out.println(i + ". " + this.location.getAdjacentSet()[i].getName());
+            }
+            Scanner sc = new Scanner(System.in);
+            int choice2 = sc.nextInt();
+            return move(this.location.getAdjacentSet()[choice2]);
+
+
         }
         else if(choice == 5){
-            return takeRole(set, scene);
+            return takeRole(this.location, this.location.getScene());
         }
         else{
             return false;
@@ -142,7 +151,7 @@ public class Player {
         this.credits -= credits;
     };
     public boolean takeRole(Set set, Scene scene) {
-        return Systems.takeRole(this, set, scene);
+        return Systems.takeRole(this);
     };
     public void addMoney(int money) {
         this.money += money;
