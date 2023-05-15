@@ -4,11 +4,12 @@ import classes.Player;
 import java.io.*;
 
 public class Deadwood {
-    private Player[] players = new Player[8];
+    private Player[] players;
     private int day;
+    private Banker banker;
+    private int curTurn;
     public Die die;
     public Board board;
-    private Banker banker;
 
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {
@@ -17,14 +18,20 @@ public class Deadwood {
         }
         //parse xml file
         //create board
-        Deadwood gameState = new Deadwood();
+        Deadwood gameState = new Deadwood(Integer.parseInt(args[1]));
     }
 
-    public Deadwood() {
+    public Deadwood(int numPlayers) {
+        if (numPlayers < 2 || numPlayers > 8) {
+            System.err.println("Invalid number of players entered");
+            return;
+        }
         this.day = 1;
         this.die = new Die();
         this.board = new Board();
         this.banker = new Banker();
+        players = new Player[numPlayers];
+        System.out.println("Started Deadwood with " + numPlayers + " players");
     }
 
     public int getDay() {
