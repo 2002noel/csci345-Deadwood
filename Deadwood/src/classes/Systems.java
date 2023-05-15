@@ -94,6 +94,8 @@ public class Systems {
         //else pay nothing
         if(ply.getlocation().getScene().getBudget() <= roll){
             //pay players on the scene
+            //call finish shot
+            ply.getlocation().finishShot();
             return true;
         }
         else{
@@ -145,9 +147,10 @@ public class Systems {
                 return true;
             }
         }
-        return false;
+
 
     }
+        return false;
     }
 
 }
