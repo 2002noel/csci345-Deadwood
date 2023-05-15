@@ -4,13 +4,21 @@ import classes.Player;
 import java.io.*;
 
 public class Deadwood {
-    private Player[] players;
+    private Player[] players = new Player[8];
     private int day;
     public Die die;
     public Board board;
     private Banker banker;
 
-
+    public static void main(String[] args) throws Exception {
+        if (args.length < 2) {
+            System.err.println("Number of players not provided");
+            return;
+        }
+        //parse xml file
+        //create board
+        Deadwood gameState = new Deadwood();
+    }
 
     public Deadwood() {
         this.day = 1;
