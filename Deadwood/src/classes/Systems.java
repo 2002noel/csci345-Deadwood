@@ -92,7 +92,6 @@ public class Systems {
         //check if the player is on a role
         //if the roll is higher than the budget, pay players on the scene
         //else pay nothing
-
         if(ply.getlocation().getScene().getBudget() <= roll){
             //pay players on the scene
             return true;
@@ -103,12 +102,52 @@ public class Systems {
         }
     }
     
-    public static boolean takeRole(Player ply, Set set, Scene scene){
-        //check if the player is at the casting office
-        //check if the player has enough money to move
-        //if the player has enough money, move the player
+    public static boolean takeRole(Player ply){
+
+        //check if the player is on a role
+        if(ply.getRole() != null){
+            return false;
+        }
+
+        //print all the avaliable roles on the set and scene of the players location
+        //ask the player which role they want to take
+        //if the player chooses a role, set the player's role to the role
         //else return false
+        Set set = ply.getlocation();
+        Scene scene = set.getScene();
+        System.out.println("Avaliable roles:");
+        for(Roles role : set.getRoles()){
+            //check if the role is taken, if it is, dont print, else print
+            if(role.getIsTaken() == false){
+                System.out.println(role.getName());
+            }
+        }
         
+        for(Roles role : scene.getRoles()){
+            //check if the role is taken, if it is, dont print, else print
+            if(role.getIsTaken() == false){
+                System.out.println(role.getName());
+            }
+        }
+
+        System.out.println("Which role would you like to take?");
+        String role = System.console().readLine();
+       
+        for(Roles r : set.getRoles()){
+            if(r.getName() == role){
+                ply.setRole(r);
+                return true;      
+        }
+
+        for(Roles r2 : scene.getRoles()){
+            if(r2.getName() == role){
+                ply.setRole(r2);
+                return true;
+            }
+        }
         return false;
+
     }
+    }
+
 }

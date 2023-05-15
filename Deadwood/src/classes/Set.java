@@ -7,6 +7,7 @@ public class Set {
     private String name;
     private Set adjacentSets[];
     private Roles[] roles;
+    private Roles[] availableroles;
     
 
     //getter and setter for shotsleft
@@ -71,4 +72,15 @@ public class Set {
         }
         return false;
     }
+
+
+    public void setRoles(Roles[] roles){
+        this.roles = roles;
+    }
+
+    public Roles[] getRoles(){
+        return roles;
+    }
+
+
 }

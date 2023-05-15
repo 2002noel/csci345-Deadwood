@@ -21,5 +21,13 @@ public class Scene {
 
     public void setName(String name){
         this.name = name;
-    }    
+    }
+
+    public Roles[] getRoles(){
+        return roles;
+    }
+
+    public void setRoles(Roles[] roles){
+        this.roles = roles;
+    }
 }

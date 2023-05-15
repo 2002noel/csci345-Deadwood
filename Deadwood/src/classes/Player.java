@@ -158,4 +158,12 @@ public class Player {
     public void setlocation(Set location) {
         this.location = location;
     };
+
+    public Roles getRole() {
+        return role;
+    };
+
+    public void setRole(Roles role) {
+        this.role = role;
+    };
 }
