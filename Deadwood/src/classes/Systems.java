@@ -180,7 +180,11 @@ public class Systems {
         // if the player chooses a role, set the player's role to the role
         // else return false
         Set set = ply.getlocation();
+        if (set == null)
+            return false;
         Scene scene = set.getScene();
+        if (scene == null)
+            return false;
         System.out.println("Avaliable roles:");
         for (Roles role : set.getRoles()) {
             // check if the role is taken, if it is, dont print, else print
