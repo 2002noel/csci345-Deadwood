@@ -5,10 +5,18 @@ public class Set {
     private int shotsleft;
     public Scene scene;
     private String name;
-    private Set adjacentSets[];
+    private Set adjacentSets[] = new Set[4];
     private Roles[] roles;
     private Roles[] availableroles;
     
+    public Set(String name) {
+        this.name = name;
+    }
+    
+    public Set(String name, Scene scene) {
+        this.name = name;
+        this.scene = scene;
+    }
 
     //getter and setter for shotsleft
     public void setShotsLeft(int shotsleft){
@@ -41,8 +49,14 @@ public class Set {
 
     //getter and setter for adjacentSet
 
-    public void setAdjacentSet(Set[] adjacentSet){
-        this.adjacentSets = adjacentSet;
+    public void addAdjacentSet(Set set){
+        for (int i = 0; i < adjacentSets.length; i++) {
+            if (adjacentSets[i] == null) {
+                adjacentSets[i] = set;
+                return;
+            }
+        }
+        System.err.println(name + " set has too many adjacent sets");
     }
 
 
