@@ -38,6 +38,14 @@ public class Deadwood {
         //set the players in the game
         game.setPlayers(players);
 
+        
+        
+        int lastday = 4;
+        while(game.getDay() < lastday){
+
+
+        }
+        
 
 
         
