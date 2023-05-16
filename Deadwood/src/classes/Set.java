@@ -5,7 +5,7 @@ public class Set {
     private int shotsLeft;
     public Scene scene;
     private String name;
-    private Set adjacentSets[] = new Set[4];
+    private Set adjacentSets[] = new Set[1];
     private Roles[] roles; // off card roles
     private Roles[] availableroles;
     
@@ -54,18 +54,25 @@ public class Set {
 
     //getter and setter for adjacentSet
 
-    public void addAdjacentSet(Set set){
+    public void addAdjacentSet(Set set) {
         for (int i = 0; i < adjacentSets.length; i++) {
             if (adjacentSets[i] == null) {
                 adjacentSets[i] = set;
                 return;
             }
         }
-        System.err.println(name + " set has too many adjacent sets");
+        
+        Set[] newSets = new Set[adjacentSets.length + 1];
+        System.arraycopy(adjacentSets, 0, newSets, 0, adjacentSets.length);
+        newSets[newSets.length - 1] = set;
+        
+        adjacentSets = newSets;
+        
+        //System.err.println(name + " set has too many adjacent sets");
     }
 
 
-    public Set[] getAdjacentSet(){
+    public Set[] getAdjacentSet() {
         return adjacentSets;
     }
 
