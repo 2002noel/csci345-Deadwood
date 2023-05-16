@@ -12,13 +12,17 @@ public class Deadwood {
     public Board board;
 
     public static void main(String[] args) throws Exception {
+        int numPlayers = 2;
         if (args.length < 2) {
-            System.err.println("Number of players not provided");
-            return;
+            /*System.err.println("Number of players not provided");
+            return;*/
+            // UNCOMMENT AFTER TESTING
+        } else {
+            numPlayers = Integer.parseInt(args[1]);
         }
         //parse xml file
         //create board
-        Deadwood gameState = new Deadwood(Integer.parseInt(args[1]));
+        Deadwood gameState = new Deadwood(numPlayers);
     }
 
     public Deadwood(int numPlayers) {
