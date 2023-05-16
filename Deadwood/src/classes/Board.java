@@ -15,6 +15,10 @@ public class Board {
         buildSets();
         buildScenes();
     }
+
+    public Scene[] getScenes() {
+        return scenes;
+    }
     
     public boolean setLocation(Player ply, Set set) {
         for (int i = 0; i < players.length; i++) {
@@ -61,7 +65,7 @@ public class Board {
         this.location = location;
     }
     
-    private Set getSetByName(String name) {
+    public Set getSetByName(String name) {
         for (int k = 0; k < sets.length; k++) {
             if (sets[k].getName().equals(name)) {
                 return sets[k];

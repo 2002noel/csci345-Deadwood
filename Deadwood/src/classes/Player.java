@@ -12,6 +12,7 @@ public class Player {
     private Die dice;
     private Set location;
     private Roles role;
+    private int id;
     
     public Player(int numCredits, int rank) {
         credits = numCredits;
@@ -28,6 +29,14 @@ public class Player {
         }
 
     };
+
+    public void setid(int id){
+        this.id = id;
+    }
+
+    public int getid(){
+        return id;
+    }
 
     public boolean move(Set set) {
         // verify that set is adjacent to current set
@@ -86,6 +95,12 @@ public class Player {
         }
         else if(choice == 5){
             return takeRole(this.location, this.location.getScene());
+        }
+        else if(choice == 6){
+            return true;
+        }else if(choice ==7){
+            //end the game
+            return false;
         }
         else{
             return false;
@@ -146,8 +161,8 @@ public class Player {
     public void addChips(int chips) {
         this.chips += chips;
     };
-    public void removeChips(int chips) {
-        this.chips -= chips;
+    public void removeChips() {
+        this.chips = 0;
     };
     public void addCredits(int credits) {
         this.credits += credits;

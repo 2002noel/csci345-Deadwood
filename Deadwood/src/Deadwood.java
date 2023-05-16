@@ -25,11 +25,13 @@ public class Deadwood {
         for( int i = 0; i < numPlayers; i++){
             if(i != banker){
                 players[i] = new Player(0, 1);
+                players[i].setid(i+1);
             }
             else{
                 players[i] = new Banker(0, 1);
                 //set the banker in the game
                 game.setBanker((Banker)players[i]);
+                players[i].setid(i+1);
                 //print out the player num that is the banker
                 System.out.println("Player " + (i+1) + " is the banker");
             }
@@ -39,6 +41,14 @@ public class Deadwood {
         game.setPlayers(players);
         //set the board in the game
         game.setBoard(new Board());
+
+        //set the board with the players
+        game.getBoard().setPlayers(players);
+        //set all the locations to Trailers
+        for(int i = 0; i < numPlayers; i++){
+            game.getBoard().setLocation(players[i], game.getBoard().getSetByName("Trailers"));
+        }
+        //set the board with the banker
         //set the day in the game
 
         
@@ -53,8 +63,6 @@ public class Deadwood {
             game.startDay();
             //start the game
             game.startGame();
-            //end the day
-            game.endDay();
 
         }
         
