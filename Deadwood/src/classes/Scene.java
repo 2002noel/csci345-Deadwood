@@ -4,10 +4,16 @@ public class Scene {
     private int budget;
     private String name;
     private String description;
+    private int sceneNum;
     private Roles[] roles;
+    
+    public Scene(String name, int budget, int sceneNum) {
+        this.name = name;
+        this.budget = budget;
+    }
 
     //create the getters and setters for the class
-    public int getBudget(){
+    public int getBudget() {
         return budget;
     }
 
