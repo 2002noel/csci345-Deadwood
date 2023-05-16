@@ -94,7 +94,7 @@ public class Player {
 
         }
         else if(choice == 5){
-            return takeRole(this.location, this.location.getScene());
+            return takeRole();
         }
         else if(choice == 6){
             return true;
@@ -170,7 +170,7 @@ public class Player {
     public void removeCredits(int credits) {
         this.credits -= credits;
     };
-    public boolean takeRole(Set set, Scene scene) {
+    public boolean takeRole() {
         return Systems.takeRole(this);
     };
     public void addMoney(int money) {
