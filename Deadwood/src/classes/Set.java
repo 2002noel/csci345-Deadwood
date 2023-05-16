@@ -41,6 +41,10 @@ public class Set {
     public Scene getScene(){
         return scene;
     }
+    
+    public boolean isSpecial() {
+        return name.equals("Trailers") || name.equals("Casting Office");
+    }
 
     //getter and setter for name
 
