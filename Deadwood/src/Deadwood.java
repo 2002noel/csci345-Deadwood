@@ -5,9 +5,6 @@ import classes.*;
 
 
 public class Deadwood {
-    
-
-
     public static void main(String[] args) {
         // TODO Auto-generated method stub
         //create a new game
@@ -18,7 +15,10 @@ public class Deadwood {
         numPlayers = sc.nextInt();
         //create a new game
 
-        GameState game = new GameState(numPlayers);
+        Systems game = Systems.getInstance();
+
+
+
         
     }
 

@@ -3,6 +3,76 @@ package classes;
 public class Systems {
     //this class vaildates moves and checks for win conditions
     //this class also handles the game loop
+    //this class is a singleton
+    private Player[] players;
+    private int day;
+    private Banker banker;
+    private int curTurn;
+    public Die die;
+    public Board board;
+
+    //create the singleton
+    private static Systems instance = null;
+
+    //create the constructor
+    private Systems() {
+        day = 1;
+        curTurn = 0;
+        die = new Die();
+        board = new Board();
+    }
+
+    //create the getInstance method
+    public static Systems getInstance() {
+        if (instance == null) {
+            instance = new Systems();
+        }
+        return instance;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void incrementDay() {
+        day++;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setDie(Die die) {
+        this.die = die;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setBanker(Banker banker) {
+        this.banker = banker;
+    }
+
+    public Die getDie() {
+        return die;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Banker getBanker() {
+        return banker;
+    }
 
 
     public static boolean upgradeRank(Player ply, int rank, boolean withcredits){
