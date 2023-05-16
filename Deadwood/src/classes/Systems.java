@@ -137,7 +137,6 @@ public class Systems {
             if(r.getName() == role){
                 ply.setRole(r);
                 return true;      
-            }
         }
 
         for(Roles r2 : scene.getRoles()){
@@ -148,6 +147,7 @@ public class Systems {
         }
 
 
+    }
         return false;
     }
 

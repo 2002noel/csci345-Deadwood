@@ -3,7 +3,8 @@ import java.util.*;
 import classes.Player;
 import java.io.*;
 
-public class Deadwood {
+
+public class GameState {
     private Player[] players;
     private int day;
     private Banker banker;
@@ -11,6 +12,7 @@ public class Deadwood {
     public Die die;
     public Board board;
 
+    
     public static void main(String[] args) throws Exception {
         int numPlayers = 2;
         if (args.length < 2) {
@@ -22,10 +24,12 @@ public class Deadwood {
         }
         //parse xml file
         //create board
-        Deadwood gameState = new Deadwood(numPlayers);
+        GameState gameState = new GameState(numPlayers);
     }
+    
+    
 
-    public Deadwood(int numPlayers) {
+    public GameState(int numPlayers) {
         if (numPlayers < 2 || numPlayers > 8) {
             System.err.println("Invalid number of players entered");
             return;
@@ -37,6 +41,8 @@ public class Deadwood {
         players = new Player[numPlayers];
         System.out.println("Started Deadwood with " + numPlayers + " players");
     }
+
+    
 
     public int getDay() {
         return day;
