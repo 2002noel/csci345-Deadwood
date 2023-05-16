@@ -19,7 +19,7 @@ public class Deadwood {
         //create a new game
 
         GameState game = new GameState(numPlayers);
-        System.out.println("does it get here");
+        
     }
 
 }
