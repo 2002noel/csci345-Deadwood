@@ -37,12 +37,24 @@ public class Deadwood {
 
         //set the players in the game
         game.setPlayers(players);
+        //set the board in the game
+        game.setBoard(new Board());
+        //set the day in the game
 
         
         
         int lastday = 4;
+        if(numPlayers < 3){
+            lastday = 3;
+        }
+        //
         while(game.getDay() < lastday){
-
+            //start the day
+            game.startDay();
+            //start the game
+            game.startGame();
+            //end the day
+            game.endDay();
 
         }
         

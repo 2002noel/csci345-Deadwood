@@ -19,7 +19,6 @@ public class Systems {
         day = 1;
         curTurn = 0;
         die = new Die();
-        board = new Board();
     }
 
     //create the getInstance method
@@ -221,4 +220,21 @@ public class Systems {
         return false;
     }
 
+
+    public void startDay(){
+        //change all the players back to the trailer
+        //change all the scenes in the sets randomly
+        //reset the shots on the sets
+        //reset the players roles
+        //reset the players rehearsal tokens
+
+        //change all the players back to the trailer
+        for(Player ply : players){
+            //from the board, get the trailer and set the player's location to the trailer
+            
+
+        }
+
+
+    }
 }
