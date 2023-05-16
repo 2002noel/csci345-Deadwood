@@ -72,6 +72,12 @@ public class Board {
             }
         }
         
+        for (int k = 0; k < specialSets.length; k++) {
+            if (specialSets[k].getName().equals(name)) {
+                return specialSets[k];
+            }
+        }
+        
         return null;
     }
     
