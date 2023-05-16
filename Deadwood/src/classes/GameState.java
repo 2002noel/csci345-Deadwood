@@ -1,12 +1,12 @@
 package classes;
 import java.util.*;
-import classes.Player;
 import java.io.*;
 
 
 public class GameState {
     private Player[] players;
     private int day;
+    private int lastDay;
     private Banker banker;
     private int curTurn;
     public Die die;
@@ -35,10 +35,19 @@ public class GameState {
             return;
         }
         this.day = 1;
+        lastDay = 4;
+        if (numPlayers < 4) {
+            lastDay = 3;
+        }
+        int startingCredits = 2;
+        int startingRank = 1;
         this.die = new Die();
         this.board = new Board();
-        this.banker = new Banker();
+        this.banker = new Banker(startingCredits, startingRank);
         players = new Player[numPlayers];
+        for (int i = 0; i < numPlayers; i++) {
+            players[i] = new Player(startingCredits, startingRank);
+        }
         System.out.println("Started Deadwood with " + numPlayers + " players");
     }
 
