@@ -5,7 +5,11 @@ public class Roles{
     private String name;
     private boolean isTaken;
 
-
+    public Roles(String name, int rank) {
+        this.name = name;
+        this.rank = rank;
+        isTaken = false;
+    }
 
     public void setName(String name){
         this.name = name;

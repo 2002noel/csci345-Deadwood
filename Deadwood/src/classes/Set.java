@@ -2,15 +2,20 @@ package classes;
 
 public class Set {
 
-    private int shotsleft;
+    private int shotsLeft;
     public Scene scene;
     private String name;
     private Set adjacentSets[] = new Set[4];
-    private Roles[] roles;
+    private Roles[] roles; // off card roles
     private Roles[] availableroles;
     
     public Set(String name) {
         this.name = name;
+    }
+    
+    public Set(String name, int numShots) {
+        this.name = name;
+        shotsLeft = numShots;
     }
     
     public Set(String name, Scene scene) {
@@ -18,13 +23,13 @@ public class Set {
         this.scene = scene;
     }
 
-    //getter and setter for shotsleft
-    public void setShotsLeft(int shotsleft){
-        this.shotsleft = shotsleft;
+    //getter and setter for shotsLeft
+    public void setShotsLeft(int shotsLeft){
+        this.shotsLeft = shotsLeft;
     }
 
     public int getShotsLeft(){
-        return shotsleft;
+        return shotsLeft;
     }
 
     //getter and setter for scene
@@ -69,10 +74,10 @@ public class Set {
     }
 
     public void finishShot(){
-        //subtract 1 from shotsleft
-        //if shotsleft == 0, call finishScene
-        this.shotsleft -= 1;
-        if (this.shotsleft == 0){
+        //subtract 1 from shotsLeft
+        //if shotsLeft == 0, call finishScene
+        this.shotsLeft -= 1;
+        if (this.shotsLeft == 0){
             this.finishScene();
         }
         return;

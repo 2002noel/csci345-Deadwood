@@ -8,10 +8,15 @@ public class Player {
     private int credits;
     private int money;
     private int chips;
+    private int rank;
     private Die dice;
     private Set location;
     private Roles role;
     
+    public Player(int numCredits, int rank) {
+        credits = numCredits;
+        this.rank = rank;
+    }
 
     int rollDice() {
         //if there are chips, add chips to roll, else just roll
