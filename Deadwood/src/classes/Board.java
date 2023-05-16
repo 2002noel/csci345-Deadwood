@@ -2,6 +2,7 @@ package classes;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
+import java.util.Random;
 
 public class Board {
     private Set[] sets = new Set[10];
@@ -10,10 +11,24 @@ public class Board {
     private Player[] players;
     private int[] location;
     private int scenesLeft;
+    private static Random rand = new Random();
     
     public Board() {
         buildSets();
         buildScenes();
+        scenesLeft = 40;
+        shuffleScenes();
+    }
+    
+    public void shuffleScenes() {
+        for (int i = 0; i < sets.length; i++) {
+            int swapInd = rand.nextInt(scenesLeft);
+            sets[i].setScene(scenes[swapInd]);
+            Scene swap = scenes[scenesLeft - 1];
+            scenes[scenesLeft - 1] = scenes[swapInd];
+            scenes[swapInd] = swap;
+            scenesLeft--;
+        }
     }
 
     public Scene[] getScenes() {
