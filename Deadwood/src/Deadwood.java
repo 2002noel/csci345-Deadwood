@@ -66,6 +66,8 @@ public class Deadwood {
 
         }
 
+        game.endgame();
+
         sc.close();
         Systems.scan.close();
         
