@@ -7,8 +7,7 @@ public class Set {
     private String name;
     private Set adjacentSets[] = new Set[1];
     private Roles[] roles; // off card roles
-    private Roles[] availableroles;
-    
+
     public Set(String name) {
         this.name = name;
     }
@@ -80,13 +79,15 @@ public class Set {
         return adjacentSets;
     }
 
-    public void finishScene(){
+    public void finishScene() {
+
         return;
     }
 
     public void finishShot(){
         //subtract 1 from shotsLeft
         //if shotsLeft == 0, call finishScene
+
         this.shotsLeft -= 1;
         if (this.shotsLeft == 0){
             this.finishScene();
