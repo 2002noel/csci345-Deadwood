@@ -7,6 +7,7 @@ public class Set {
     private String name;
     private Set adjacentSets[] = new Set[1];
     private Roles[] roles; // off card roles
+    
 
     public Set(String name) {
         this.name = name;
@@ -80,7 +81,7 @@ public class Set {
     }
 
     public void finishScene() {
-
+        //find every player on the set
         return;
     }
 
