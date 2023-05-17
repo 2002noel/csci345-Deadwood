@@ -167,10 +167,13 @@ public class Systems {
         if (ply.getlocation().getScene().getBudget() <= roll) {
             // pay players on the scene
             // call finish shot
+            System.out.println("Acting succeeded");
+            System.out.println("Roll: " + roll + " Budget: " + ply.getlocation().getScene().getBudget());
             ply.getlocation().finishShot();
             return true;
         }
         System.out.println("Acting failed");
+        System.out.println("Roll: " + roll + " Budget: " + ply.getlocation().getScene().getBudget());
         return true;
         // check how many scenes are left on the board, if there are 1 or less, end the
         // day
