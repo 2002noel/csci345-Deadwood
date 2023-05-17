@@ -74,18 +74,17 @@ public class Player {
             System.out.println("Would you like to upgrade with credits or dollars?");
             System.out.println("1. Credits");
             System.out.println("2. Dollars");
-            Scanner sc = new Scanner(System.in);
-            int choice2 = sc.nextInt();
+            int choice2 = Systems.getIntFromUser();
             if(choice2 == 1){
                 //get the rank the player wants to upgrade to
                 System.out.println("What rank would you like to upgrade to?");
-                int rank = sc.nextInt();
+                int rank = Systems.getIntFromUser();
                 return Systems.upgradeRank(this, rank, true);
             }
             else if(choice2 == 2){
                 //get the rank the player wants to upgrade to
                 System.out.println("What rank would you like to upgrade to?");
-                int rank = sc.nextInt();
+                int rank = Systems.getIntFromUser();
                 return Systems.upgradeRank(this, rank, false);
             }
             else{
@@ -98,10 +97,11 @@ public class Player {
             for(int i = 0; i < this.location.getAdjacentSet().length; i++){
                 System.out.println(i + ". " + this.location.getAdjacentSet()[i].getName());
             }
-            Scanner sc = new Scanner(System.in);
-            int choice2 = sc.nextInt();
-            if (choice2 < 0 || choice2 >= this.location.getAdjacentSet().length)
+            int choice2 = Systems.getIntFromUser();
+            //sc.nextLine(); // consume next line or else we get errors later
+            if (choice2 < 0 || choice2 >= this.location.getAdjacentSet().length) {
                 return false;
+            }
             System.out.println("Moving to " + this.location.getAdjacentSet()[choice2].getName() + "...");
             return move(this.location.getAdjacentSet()[choice2]);
 
