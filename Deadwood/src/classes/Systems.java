@@ -228,6 +228,7 @@ public class Systems {
             return false;
         }
 
+
         // print all the available roles on the set and scene of the players location
         // ask the player which role they want to take
         // if the player chooses a role, set the player's role to the role
@@ -263,6 +264,14 @@ public class Systems {
         String role = scan.nextLine();
         for (Roles r : set.getRoles()) {
             if (r.getName().equals(role)) {
+                if(r.getIsTaken() != null){
+                    System.out.println("Role is taken");
+                    return false;
+                }
+                if(r.getRank() > ply.getDice().getRank()){
+                    System.out.println("You do not have a high enough rank");
+                    return false;
+                }
                 ply.setRole(r);
                 r.setIsTaken(ply);
                 return true;
@@ -270,6 +279,14 @@ public class Systems {
         }
         for (Roles r2 : scene.getRoles()) {
             if (r2.getName().equals(role)) {
+                if(r2.getIsTaken() != null){
+                    System.out.println("Role is taken");
+                    return false;
+                }
+                if(r2.getRank() > ply.getDice().getRank()){
+                    System.out.println("You do not have a high enough rank");
+                    return false;
+                }
                 ply.setRole(r2);
                 r2.setIsTaken(ply);
                 return true;
