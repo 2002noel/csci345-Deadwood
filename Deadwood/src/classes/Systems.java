@@ -77,6 +77,29 @@ public class Systems {
         return banker;
     }
 
+    //end game
+
+    public void endgame(){
+        //calculate the scores
+        //print the scores
+        //print the winner
+        //exit the game
+        //the final score is credit + dollars + rank*5
+        int max = 0;
+        int winner = 0;
+        int[] scores = new int[players.length];
+        for(int i = 0; i < players.length; i++){
+            scores[i]=(players[i].getCredits() + players[i].getMoney() + players[i].getDice().getRank()*5);
+            System.out.println("Player " + (i+1) + " Rank: " + players[i].getDice().getRank() + " Credits: " + players[i].getCredits() + " Dollars: " + players[i].getMoney() + " Score: " + scores[i]);
+            if(scores[i] > max){
+                max = scores[i];
+                winner = i;
+            }
+        }
+        System.out.println("The winner is player " + (winner+1) + " with a score of " + max);
+        System.exit(0);
+    }
+
     public static boolean upgradeRank(Player ply, int rank, boolean withcredits) {
         // check if the player has enough money to upgrade
         // check if the player is at the casting office
@@ -205,6 +228,7 @@ public class Systems {
             return false;
         }
 
+
         // print all the available roles on the set and scene of the players location
         // ask the player which role they want to take
         // if the player chooses a role, set the player's role to the role
@@ -240,6 +264,14 @@ public class Systems {
         String role = scan.nextLine();
         for (Roles r : set.getRoles()) {
             if (r.getName().equals(role)) {
+                if(r.getIsTaken() != null){
+                    System.out.println("Role is taken");
+                    return false;
+                }
+                if(r.getRank() > ply.getDice().getRank()){
+                    System.out.println("You do not have a high enough rank");
+                    return false;
+                }
                 ply.setRole(r);
                 r.setIsTaken(ply);
                 return true;
@@ -247,6 +279,14 @@ public class Systems {
         }
         for (Roles r2 : scene.getRoles()) {
             if (r2.getName().equals(role)) {
+                if(r2.getIsTaken() != null){
+                    System.out.println("Role is taken");
+                    return false;
+                }
+                if(r2.getRank() > ply.getDice().getRank()){
+                    System.out.println("You do not have a high enough rank");
+                    return false;
+                }
                 ply.setRole(r2);
                 r2.setIsTaken(ply);
                 return true;
@@ -312,7 +352,7 @@ public class Systems {
     
                 if(choice == 7){
                     this.day = 5;
-                    endDay();
+                    endgame();
                     return;
                 }
     
@@ -333,7 +373,7 @@ public class Systems {
     
                     if(choice == 7){
                         this.day = 5;
-                        endDay();
+                        endgame();
                         return;
                     }
     
