@@ -100,9 +100,10 @@ public class Player {
             }
             Scanner sc = new Scanner(System.in);
             int choice2 = sc.nextInt();
+            if (choice2 < 0 || choice2 >= this.location.getAdjacentSet().length)
+                return false;
             System.out.println("Moving to " + this.location.getAdjacentSet()[choice2].getName() + "...");
             return move(this.location.getAdjacentSet()[choice2]);
-
 
         }
         else if(choice == 5){
