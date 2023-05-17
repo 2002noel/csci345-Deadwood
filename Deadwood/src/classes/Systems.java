@@ -185,17 +185,17 @@ public class Systems {
         // if the player chooses a role, set the player's role to the role
         // else return false
         Set set = ply.getlocation();
-        System.out.println(set.getName());
-        if (set == null) {
+        if (set == null || set.isSpecial()) {
             System.out.println("You are not on a set");
             return false;
         }
+        System.out.println(set.getName());
         Scene scene = set.getScene();
         if (scene == null) {
             System.err.println("!!!SET MISSING SCENE!!!");
             return false;
         }
-        System.out.println("Avaliable roles:");
+        System.out.println("Available roles:");
         for (Roles role : set.getRoles()) {
             // check if the role is taken, if it is, dont print, else print
             if (role.getIsTaken() == false) {
@@ -307,6 +307,7 @@ public class Systems {
                     System.out.println("5. Take Role");
                     System.out.println("6. End Turn");
                     System.out.println("7. Quit Game");
+                    while (!scan.hasNextLine()) {}
                     choice = Integer.parseInt(scan.nextLine());
     
                     if(choice == 7){
