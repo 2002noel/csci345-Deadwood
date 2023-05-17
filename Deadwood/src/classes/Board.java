@@ -2,6 +2,7 @@ package classes;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Board {
@@ -225,16 +226,16 @@ public class Board {
                     String cname = sub.getNodeName();
                     if (cname.equals("parts")) {
                         NodeList parts = sub.getChildNodes();
-                        Roles[] rArr = new Roles[(int) Math.ceil(parts.getLength() / 2.0)];
+                        Roles[] rArr = new Roles[(int) Math.floor(parts.getLength() / 2.0)];
+                        int realIndex = 0;
                         for (int partInd = 0; partInd < parts.getLength(); partInd++) {
                             Node part = parts.item(partInd);
                             if (!part.getNodeName().equals("part"))
                                 continue;
-                            
-                            int realPartInd = (int) Math.ceil(partInd / 2.0);
                             NamedNodeMap attribs = part.getAttributes();
-                            rArr[realPartInd] = new Roles(attribs.getNamedItem("name").getNodeValue()
+                            rArr[realIndex] = new Roles(attribs.getNamedItem("name").getNodeValue()
                                 , Integer.parseInt(attribs.getNamedItem("level").getNodeValue()));
+                            realIndex++;
                         }
                         s.setRoles(rArr);
                     }
