@@ -148,14 +148,6 @@ public class Systems {
         
     }
 
-    public static boolean work(Player ply, Set set) {
-        // check if the player is on a role
-        if (ply.getRole() != null) {
-            
-        }
-        return false;
-    }
-
     public static boolean act(Player ply, int roll) {
         // check the budget of the scene
         // check if the player is on a role
@@ -231,7 +223,7 @@ public class Systems {
         System.out.println("Available roles:");
         for (Roles role : scene.getRoles()) {
             // check if the role is taken, if it is, dont print, else print
-            if (role.getIsTaken() == false) {
+            if (role.getIsTaken() == null) {
                 System.out.println(role.getName());
 
             }
@@ -239,7 +231,7 @@ public class Systems {
         System.out.println("Extras:");
         for (Roles role : set.getRoles()) {
             // check if the role is taken, if it is, dont print, else print
-            if (role.getIsTaken() == false) {
+            if (role.getIsTaken() == null) {
                 System.out.println(role.getName());
             }
         }
@@ -249,14 +241,14 @@ public class Systems {
         for (Roles r : set.getRoles()) {
             if (r.getName().equals(role)) {
                 ply.setRole(r);
-                r.setIsTaken(true);
+                r.setIsTaken(ply);
                 return true;
             }
         }
         for (Roles r2 : scene.getRoles()) {
             if (r2.getName().equals(role)) {
                 ply.setRole(r2);
-                r2.setIsTaken(true);
+                r2.setIsTaken(ply);
                 return true;
             }
         }

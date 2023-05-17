@@ -3,12 +3,12 @@ package classes;
 public class Roles{
     private int rank;
     private String name;
-    private boolean isTaken;
+    private Player takenBy;
 
     public Roles(String name, int rank) {
         this.name = name;
         this.rank = rank;
-        isTaken = false;
+        takenBy = null;
     }
 
     public void setName(String name){
@@ -27,12 +27,12 @@ public class Roles{
         return rank;
     }
 
-    public void setIsTaken(boolean isTaken){
-        this.isTaken = isTaken;
+    public void setIsTaken(Player take){
+        takenBy = take;
     }
 
-    public boolean getIsTaken(){
-        return isTaken;
+    public Player getIsTaken(){
+        return takenBy;
     }
 
 
