@@ -82,9 +82,11 @@ public class Set {
         boolean shouldPay = false;
         int amountToPay = scene.getBudget();
         for (Roles r : scene.getRoles()) {
-            if (r.getIsTaken() != null) {
+            Player ply = r.getIsTaken();
+            if (ply != null) {
                 shouldPay = true;
-                break;
+                ply.removeChips();
+                ply.setRole(null);
             }
         }
 
@@ -95,15 +97,15 @@ public class Set {
             }
             Arrays.sort(payout); // must be sorted from least to greatest
             Roles[] roles = scene.getRoles();
-            int rolesIndex = roles.length - 1;
+            int rolesIndex = roles.length;
             while (amountToPay > 0) { // assumes that roles are ordered least rank to greatest rank
+                rolesIndex--;
                 if (roles[rolesIndex].getIsTaken() != null) {
                     amountToPay--;
                     roles[rolesIndex].getIsTaken().addMoney(payout[amountToPay]);
                 }
-                rolesIndex--;
-                if (rolesIndex < 0) {
-                    rolesIndex = roles.length - 1;
+                if (rolesIndex == 0) {
+                    rolesIndex = roles.length;
                 }
             }
 
@@ -111,7 +113,16 @@ public class Set {
             for (Roles r : roles) {
                 Player ply = r.getIsTaken();
                 if (ply != null) {
+                    ply.removeChips();
                     ply.addMoney(r.getRank());
+                }
+            }
+        } else {
+            for (Roles r : roles) {
+                Player ply = r.getIsTaken();
+                if (ply != null) {
+                    ply.removeChips();
+                    ply.setRole(null);
                 }
             }
         }
