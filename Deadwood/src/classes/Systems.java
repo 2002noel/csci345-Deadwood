@@ -244,19 +244,19 @@ public class Systems {
             System.err.println("!!!SET MISSING SCENE!!!");
             return false;
         }
+        System.out.println("Player rank: " + ply.getDice().getRank());
         System.out.println("Available roles:");
         for (Roles role : scene.getRoles()) {
             // check if the role is taken, if it is, dont print, else print
             if (role.getIsTaken() == null) {
-                System.out.println(role.getName());
-
+                System.out.println("\"" + role.getName() + "\"" + " Rank: " + role.getRank());
             }
         }
         System.out.println("Extras:");
         for (Roles role : set.getRoles()) {
             // check if the role is taken, if it is, dont print, else print
             if (role.getIsTaken() == null) {
-                System.out.println(role.getName());
+                System.out.println("\"" + role.getName() + "\"" + " Rank: " + role.getRank());
             }
         }
 
