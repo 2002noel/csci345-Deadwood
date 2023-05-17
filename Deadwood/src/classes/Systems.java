@@ -167,10 +167,39 @@ public class Systems {
         if (ply.getlocation().getScene().getBudget() <= roll) {
             // pay players on the scene
             // call finish shot
-            ply.getlocation().finishShot();
-            return true;
+            for (Roles r : ply.getlocation().getRoles()) {
+                if (r.equals(ply.getRole())) {
+                    ply.getlocation().finishShot();
+                    ply.addCredits(1);
+                    ply.addMoney(1);
+                    System.out.println("Success! Gained 1 credit and 1 dollar");
+                    ply.getlocation().finishShot();
+                    return true;
+                }
+            }
+
+            for (Roles r : ply.getlocation().getScene().getRoles()) {
+                if (r.equals(ply.getRole())) {
+                    ply.getlocation().finishShot();
+                    ply.addCredits(2);
+                    System.out.println("Success! Gained 2 credits");
+                    ply.getlocation().finishShot();
+                    return true;
+                }
+            }
+
+            System.err.println("PLAYER ATTEMPTING ACT ON WRONG LOCATION");
+            return false;
         }
+
         System.out.println("Acting failed");
+        for (Roles r : ply.getlocation().getRoles()) {
+            if (r.equals(ply.getRole())) {
+                ply.addMoney(1);
+                System.out.println("Gained 1 dollar");
+                return true;
+            }
+        }
         return true;
         // check how many scenes are left on the board, if there are 1 or less, end the
         // day
@@ -224,7 +253,6 @@ public class Systems {
                 return true;
             }
         }
-        System.out.println("Main roles:");
         for (Roles r2 : scene.getRoles()) {
             if (r2.getName().equals(role)) {
                 ply.setRole(r2);
