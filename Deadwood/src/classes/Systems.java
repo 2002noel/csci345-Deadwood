@@ -296,7 +296,7 @@ public class Systems {
             int choice = Integer.parseInt(System.console().readLine());
 
             if(choice == 7){
-                this.day = 4;
+                this.day = 5;
                 endDay();
                 return;
             }

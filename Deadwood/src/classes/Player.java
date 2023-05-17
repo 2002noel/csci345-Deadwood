@@ -17,6 +17,8 @@ public class Player {
     public Player(int numCredits, int rank) {
         credits = numCredits;
         this.rank = rank;
+        role = null;
+        dice = new Die();
     }
 
     int rollDice() {
