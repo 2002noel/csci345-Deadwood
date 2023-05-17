@@ -7,7 +7,7 @@ import java.util.Random;
 public class Board {
     private Set[] sets = new Set[10];
     private Set[] specialSets = new Set[2];
-    private Scene[] scenes = new Scene[40];
+    private Scene[] scenes;
     private Player[] players;
     private int[] location;
     private int scenesLeft;
@@ -99,43 +99,37 @@ public class Board {
     private void buildScenes() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document dom = builder.parse(new File("./cards.xml"));
-            Element root = dom.getDocumentElement();
-            NodeList list = root.getElementsByTagName("card");
-            
-            for (int i = 0; i < scenes.length; i++) {
-                Node node = list.item(i);
-                NamedNodeMap attribs = node.getAttributes();
-                String name = attribs.getNamedItem("name").getNodeValue();
-                int budget = Integer.parseInt(attribs.getNamedItem("budget").getNodeValue());
-                int sceneNum = -1;
-                NodeList cnodes = node.getChildNodes();
-                int numRoles = 0;
-                Roles[] rArr = new Roles[4];
-                for (int k = 0; k < cnodes.getLength(); k++) {
-                    Node part = cnodes.item(k);
-                    NamedNodeMap cAttribs = part.getAttributes();
-                    if (part.getNodeName().equals("scene")) {
-                        sceneNum = Integer.parseInt(attribs.getNamedItem("number").getNodeValue());
-                    } else if (part.getNodeName().equals("part")) {
-                        rArr[numRoles] = new Roles(cAttribs.getNamedItem("name").getNodeValue()
-                                , Integer.parseInt(cAttribs.getNamedItem("level").getNodeValue()));
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document dom = builder.parse(new File("./cards.xml"));
+    Element root = dom.getDocumentElement();
+    NodeList cardList = root.getElementsByTagName("card");
+    int numCards = cardList.getLength();
+    scenes = new Scene[numCards];
 
-                        numRoles++;
-                    }
-                }
-                
-                if (sceneNum == -1) {
-                    System.err.println("Couldn't find scene number");
-                    return;
-                }
-                
-                scenes[i] = new Scene(name, budget, sceneNum);
-                Roles[] reducedRoles = new Roles[numRoles];
-                System.arraycopy(rArr, 0, reducedRoles, 0, numRoles);
-                scenes[i].setRoles(reducedRoles);
-            }
+    for (int i = 0; i < numCards; i++) {
+        Element cardElement = (Element) cardList.item(i);
+        String name = cardElement.getAttribute("name");
+        int budget = Integer.parseInt(cardElement.getAttribute("budget"));
+        NodeList sceneList = cardElement.getElementsByTagName("scene");
+        Element sceneElement = (Element) sceneList.item(0);
+        int sceneNum = Integer.parseInt(sceneElement.getAttribute("number"));
+        String description = sceneElement.getTextContent().trim();
+
+        NodeList partList = cardElement.getElementsByTagName("part");
+        int numRoles = partList.getLength();
+        Roles[] roles = new Roles[numRoles];
+
+        for (int j = 0; j < numRoles; j++) {
+            Element partElement = (Element) partList.item(j);
+            String roleName = partElement.getAttribute("name");
+            int roleLevel = Integer.parseInt(partElement.getAttribute("level"));
+            roles[j] = new Roles(roleName, roleLevel);
+        }
+
+        scenes[i] = new Scene(name, budget, sceneNum);
+        scenes[i].setDescription(description);
+        scenes[i].setRoles(roles);
+    }
         } catch (Exception e) {
         }
     }

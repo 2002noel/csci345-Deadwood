@@ -250,22 +250,22 @@ public class Systems {
 
         System.out.println("Everyone at the Trailers!");
         Scene[] scene = board.getScenes();
+        int[] randoms = new int[board.getScenes().length];
         // change all the scenes in the sets randomly
         for (Set set : board.getSets()) {
             // check if the set is not the trailer or casting office
             if (set.getName() != "Trailers" && set.getName() != "Casting Office") {
-                // get a random scene from the deck
-
-                // pick a random scene from the deck
+                // get a random scene from the scene
                 int random = (int) (Math.random() * scene.length);
-                while (scene[random] != null) {
+                // check if the random number has already been used
+                while (randoms[random] == 1) {
+                    // get a new random number
                     random = (int) (Math.random() * scene.length);
                 }
-
-                // set the set's scene to the random scene, make sure the scene is removed from
-                // the deck
+                // set the set's scene to the random scene
                 set.setScene(scene[random]);
-                scene[random] = null;
+                // set the random number to used
+                randoms[random] = 1;
             }
         }
     }

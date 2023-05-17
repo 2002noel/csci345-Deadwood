@@ -42,6 +42,7 @@ public class Deadwood {
         //set the board in the game
         game.setBoard(new Board());
 
+        //print all the scenes on the board
         //set the board with the players
         game.getBoard().setPlayers(players);
         //set all the locations to Trailers

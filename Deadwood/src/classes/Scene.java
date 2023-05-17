@@ -10,11 +10,16 @@ public class Scene {
     public Scene(String name, int budget, int sceneNum) {
         this.name = name;
         this.budget = budget;
+        this.sceneNum = sceneNum;
     }
 
     //create the getters and setters for the class
     public int getBudget() {
         return budget;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
     }
 
     public void setBudget(int budget){
