@@ -1,4 +1,5 @@
 package classes;
+import java.util.Scanner;
 
 public class Systems {
     // this class vaildates moves and checks for win conditions
@@ -137,7 +138,7 @@ public class Systems {
             return false;
         }
 
-        System.out.println(set.getName() + "is the new location");
+        System.out.println(set.getName() + " is the new location");
         //change the players location
         ply.setlocation(set);
         return true;
@@ -146,7 +147,9 @@ public class Systems {
 
     public static boolean work(Player ply, Set set) {
         // check if the player is on a role
-
+        if (ply.getRole() != null) {
+            
+        }
         return false;
     }
 
@@ -155,13 +158,14 @@ public class Systems {
         // check if the player is on a role
         // if the roll is higher than the budget, pay players on the scene
         // else pay nothing
+        if (ply.getRole() == null)
+            return false;
+            
         if (ply.getlocation().getScene().getBudget() <= roll) {
             // pay players on the scene
             // call finish shot
             ply.getlocation().finishShot();
             return true;
-        } else {
-            // pay nothing
         }
         return false;
         // check how many scenes are left on the board, if there are 1 or less, end the
@@ -176,7 +180,7 @@ public class Systems {
             return false;
         }
 
-        // print all the avaliable roles on the set and scene of the players location
+        // print all the available roles on the set and scene of the players location
         // ask the player which role they want to take
         // if the player chooses a role, set the player's role to the role
         // else return false
@@ -207,8 +211,9 @@ public class Systems {
         }
 
         System.out.println("Which role would you like to take?");
-        String role = System.console().readLine();
-
+        Scanner scan = new Scanner(System.in);
+        String role = scan.nextLine();
+        scan.close();
         for (Roles r : set.getRoles()) {
             if (r.getName() == role) {
                 ply.setRole(r);
@@ -258,6 +263,7 @@ public class Systems {
 
     public void startGame() {
         // tell every player on the list to make a turn
+        Scanner scan = new Scanner(System.in);
         while (true) {
             for (Player ply : players) {
                 // ask a player what they want to do
@@ -279,11 +285,12 @@ public class Systems {
                 System.out.println("6. End Turn");
                 System.out.println("7. End Game");
     
-                int choice = Integer.parseInt(System.console().readLine());
+                int choice = Integer.parseInt(scan.nextLine());
     
                 if(choice == 7){
                     this.day = 5;
                     endDay();
+                    scan.close();
                     return;
                 }
     
@@ -300,11 +307,12 @@ public class Systems {
                     System.out.println("5. Take Role");
                     System.out.println("6. End Turn");
                     System.out.println("7. Quit Game");
-                    choice = Integer.parseInt(System.console().readLine());
+                    choice = Integer.parseInt(scan.nextLine());
     
                     if(choice == 7){
                         this.day = 5;
                         endDay();
+                        scan.close();
                         return;
                     }
     
@@ -314,11 +322,14 @@ public class Systems {
                 //check how many scenes are left on the board, if there are 1 or less, end the day
                 if(board.getScenes().length <= 1){
                     endDay();
+                    scan.close();
                     return;
                 }
             }
 
         }
+
+        //scan.close();
 
     }
 }
