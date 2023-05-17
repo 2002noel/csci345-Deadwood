@@ -159,7 +159,7 @@ public class Systems {
             // pay players on the scene
             // call finish shot
             ply.getlocation().finishShot();
-
+            return true;
         } else {
             // pay nothing
         }
@@ -247,27 +247,8 @@ public class Systems {
             board.setLocation(ply, board.getSetByName("Trailers"));
         }
 
-
+        board.shuffleScenes();
         System.out.println("Everyone at the Trailers!");
-        Scene[] scene = board.getScenes();
-        int[] randoms = new int[board.getScenes().length];
-        // change all the scenes in the sets randomly
-        for (Set set : board.getSets()) {
-            // check if the set is not the trailer or casting office
-            if (set.getName() != "Trailers" && set.getName() != "Casting Office") {
-                // get a random scene from the scene
-                int random = (int) (Math.random() * scene.length);
-                // check if the random number has already been used
-                while (randoms[random] == 1) {
-                    // get a new random number
-                    random = (int) (Math.random() * scene.length);
-                }
-                // set the set's scene to the random scene
-                set.setScene(scene[random]);
-                // set the random number to used
-                randoms[random] = 1;
-            }
-        }
     }
 
     public void endDay() {
@@ -277,40 +258,18 @@ public class Systems {
 
     public void startGame() {
         // tell every player on the list to make a turn
-        while(true){
-        for (Player ply : players) {
-            // ask a player what they want to do
-            // if choice is 1, rehearse
-            // if choice is 2, act
-            // if choice is 3, upgrade
-            // if choice is 4, move
-            // if choice is 5, take role
-            // if choice is 6, end turn
-            // if choice is 7, quit game
-            System.out.println("It is Player " + ply.getid() + "'s turn.");
-            System.out.println("You are at " + ply.getlocation().getName() + ".");
-            System.out.println("What would you like to do?");
-            System.out.println("1. Rehearse");
-            System.out.println("2. Act");
-            System.out.println("3. Upgrade");
-            System.out.println("4. Move");
-            System.out.println("5. Take Role");
-            System.out.println("6. End Turn");
-            System.out.println("7. End Game");
-
-            int choice = Integer.parseInt(System.console().readLine());
-
-            if(choice == 7){
-                this.day = 5;
-                endDay();
-                return;
-            }
-
-
-            boolean valid = ply.useTurn(choice);
-
-            while (!valid) {
-                System.out.println("Invalid choice, please try again.");
+        while (true) {
+            for (Player ply : players) {
+                // ask a player what they want to do
+                // if choice is 1, rehearse
+                // if choice is 2, act
+                // if choice is 3, upgrade
+                // if choice is 4, move
+                // if choice is 5, take role
+                // if choice is 6, end turn
+                // if choice is 7, quit game
+                System.out.println("It is Player " + ply.getid() + "'s turn.");
+                System.out.println("You are at " + ply.getlocation().getName() + ".");
                 System.out.println("What would you like to do?");
                 System.out.println("1. Rehearse");
                 System.out.println("2. Act");
@@ -318,24 +277,46 @@ public class Systems {
                 System.out.println("4. Move");
                 System.out.println("5. Take Role");
                 System.out.println("6. End Turn");
-                System.out.println("7. Quit Game");
-                choice = Integer.parseInt(System.console().readLine());
-
+                System.out.println("7. End Game");
+    
+                int choice = Integer.parseInt(System.console().readLine());
+    
                 if(choice == 7){
                     this.day = 5;
                     endDay();
                     return;
                 }
-
-                valid = ply.useTurn(choice);
+    
+    
+                boolean valid = ply.useTurn(choice);
+    
+                while (!valid) {
+                    System.out.println("Invalid choice, please try again.");
+                    System.out.println("What would you like to do?");
+                    System.out.println("1. Rehearse");
+                    System.out.println("2. Act");
+                    System.out.println("3. Upgrade");
+                    System.out.println("4. Move");
+                    System.out.println("5. Take Role");
+                    System.out.println("6. End Turn");
+                    System.out.println("7. Quit Game");
+                    choice = Integer.parseInt(System.console().readLine());
+    
+                    if(choice == 7){
+                        this.day = 5;
+                        endDay();
+                        return;
+                    }
+    
+                    valid = ply.useTurn(choice);
+                }
+    
+                //check how many scenes are left on the board, if there are 1 or less, end the day
+                if(board.getScenes().length <= 1){
+                    endDay();
+                    return;
+                }
             }
-
-            //check how many scenes are left on the board, if there are 1 or less, end the day
-            if(board.getScenes().length <= 1){
-                endDay();
-                return;
-            }
-        }
 
         }
 
