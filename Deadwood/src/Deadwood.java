@@ -12,8 +12,7 @@ public class Deadwood {
         System.out.println("How many players are playing?");
         Scanner sc = new Scanner(System.in);
         numPlayers = sc.nextInt();
-        //create a new game
-
+        sc.nextLine();
         Systems game = Systems.getInstance();
 
         //assign a random player to be the banker
@@ -66,9 +65,9 @@ public class Deadwood {
             game.startGame();
 
         }
-        
 
-
+        sc.close();
+        Systems.scan.close();
         
     }
 
