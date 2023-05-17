@@ -1,8 +1,8 @@
 package classes;
+
 import java.util.*;
 import classes.Player;
 import java.io.*;
-
 
 public class Player {
     private int credits;
@@ -13,31 +13,31 @@ public class Player {
     private Set location;
     private Roles role;
     private int id;
-    
+
     public Player(int numCredits, int rank) {
         credits = numCredits;
         this.rank = rank;
         role = null;
         dice = new Die();
+        dice.setRank(rank);
         location = null;
     }
 
     int rollDice() {
-        //if there are chips, add chips to roll, else just roll
-        if(chips > 0){
+        // if there are chips, add chips to roll, else just roll
+        if (chips > 0) {
             return dice.rollDie() + chips;
-        }
-        else{
+        } else {
             return dice.rollDie();
         }
 
     };
 
-    public void setid(int id){
+    public void setid(int id) {
         this.id = id;
     }
 
-    public int getid(){
+    public int getid() {
         return id;
     }
 
@@ -48,112 +48,148 @@ public class Player {
 
         if (this.location.isAdjacent(set) && role == null) {
             return Systems.move(this, set);
-        }   
+        }
         return false;
     };
 
     public boolean useTurn(int choice) {
-        //if choice is 1, rehearse
-        //if choice is 2, act
-        //if choice is 3, upgrade
-        //if choice is 4, move
-        //if choice is 5, take role
+        // if choice is 1, rehearse
+        // if choice is 2, act
+        // if choice is 3, upgrade
+        // if choice is 4, move
+        // if choice is 5, take role
 
-        if(choice == 1){
+        if (choice == 1) {
             return rehearse();
-        }
-        else if(choice == 2){
+        } else if (choice == 2) {
             return act();
-        }
-        else if(choice == 3){
-            //ask the player if they want to upgrade with credits or dollars
-            //if they choose credits, call upgradeRank with true
-            //if they choose dollars, call upgradeRank with false
+        } else if (choice == 3) {
+            // ask the player if they want to upgrade with credits or dollars
+            // if they choose credits, call upgradeRank with true
+            // if they choose dollars, call upgradeRank with false
             System.out.println("Would you like to upgrade with credits or dollars?");
             System.out.println("1. Credits");
             System.out.println("2. Dollars");
             int choice2 = Systems.getIntFromUser();
-            if(choice2 == 1){
-                //get the rank the player wants to upgrade to
+            if (choice2 == 1) {
+                // get the rank the player wants to upgrade to
                 System.out.println("What rank would you like to upgrade to?");
                 int rank = Systems.getIntFromUser();
                 return Systems.upgradeRank(this, rank, true);
-            }
-            else if(choice2 == 2){
-                //get the rank the player wants to upgrade to
+            } else if (choice2 == 2) {
+                // get the rank the player wants to upgrade to
                 System.out.println("What rank would you like to upgrade to?");
                 int rank = Systems.getIntFromUser();
                 return Systems.upgradeRank(this, rank, false);
-            }
-            else{
+            } else {
                 return false;
             }
-        }
-        else if(choice == 4){
-            //show adjacent sets
+        } else if (choice == 4) {
+            // show adjacent sets
             if (role != null) {
                 System.out.println("Unable to move until set is wrapped");
                 return false;
             }
             System.out.println("Where would you like to move?");
-            for(int i = 0; i < this.location.getAdjacentSet().length; i++){
+            for (int i = 0; i < this.location.getAdjacentSet().length; i++) {
                 System.out.println(i + ". " + this.location.getAdjacentSet()[i].getName());
             }
             int choice2 = Systems.getIntFromUser();
-            //sc.nextLine(); // consume next line or else we get errors later
+            // sc.nextLine(); // consume next line or else we get errors later
             if (choice2 < 0 || choice2 >= this.location.getAdjacentSet().length) {
                 return false;
             }
             System.out.println("Moving to " + this.location.getAdjacentSet()[choice2].getName() + "...");
-            return move(this.location.getAdjacentSet()[choice2]);
+            boolean check = move(this.location.getAdjacentSet()[choice2]);
+            if (!check) {
+                return false;
+            } else {
+                // check if player wants to take a role
+                System.out.println("Would you like to take a role?");
+                System.out.println("1. Yes");
+                System.out.println("2. No");
+                int choice3 = Systems.getIntFromUser();
+                if (choice3 == 1) {
+                    boolean check2 = takeRole();
+                    while (!check2) {
+                        System.out.println("Would you like to take a role?");
+                        System.out.println("1. Yes");
+                        System.out.println("2. No");
+                        choice3 = Systems.getIntFromUser();
+                        if (choice3 == 1) {
+                            check2 = takeRole();
+                        } else if (choice3 == 2) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                } else if (choice3 == 2) {
+                    return true;
+                } else {
+                    System.out.println("Invalid input");
+                    boolean check3 = false;
+                    while (!check3) {
+                        System.out.println("Would you like to take a role?");
+                        System.out.println("1. Yes");
+                        System.out.println("2. No");
+                        choice3 = Systems.getIntFromUser();
+                        if (choice3 == 1) {
+                            check3 = takeRole();
+                        } else if (choice3 == 2) {
+                            check3 = true;
+                        } else {
+                            System.out.println("Invalid input");
+                        }
+                    }
 
-        }
-        else if(choice == 5) {
+                    return true;
+                }
+            }
+
+        } else if (choice == 5) {
             return takeRole();
-        }
-        else if(choice == 6){
+        } else if (choice == 6) {
             return true;
-        }else if(choice ==7){
-            //end the game
+        } else if (choice == 7) {
+            // end the game
+            return false;
+        } else {
             return false;
         }
-        else{
-            return false;
-        }
+
+        return false;
+
     };
 
     public boolean rehearse() {
-        //add to chips and return true
+        // add to chips and return true
 
-        //check if the player is on a role
-        if(role == null){
+        // check if the player is on a role
+        if (role == null) {
             return false;
-        }
-        else{
-            //add to chips
+        } else {
+            // add to chips
             chips++;
             return true;
         }
-        
+
     };
 
     public boolean act() {
-        //roll die and call Systems act 
-        //check if the player is on a role
-        if(role == null){
+        // roll die and call Systems act
+        // check if the player is on a role
+        if (role == null) {
             return false;
-        }
-        else{
-            //roll die
+        } else {
+            // roll die
             int roll = rollDice();
             return Systems.act(this, roll);
         }
     };
 
-
-    
     public boolean upgradeRank(int rank, boolean withcredits) {
-        //call the Deadwood method upgradeRank
+        // call the Deadwood method upgradeRank
         return Systems.upgradeRank(this, rank, withcredits);
     };
 
@@ -172,25 +208,31 @@ public class Player {
     public int getMoney() {
         return money;
     };
-    
+
     public void addChips(int chips) {
         this.chips += chips;
     };
+
     public void removeChips() {
         this.chips = 0;
     };
+
     public void addCredits(int credits) {
         this.credits += credits;
     };
+
     public void removeCredits(int credits) {
         this.credits -= credits;
     };
+
     public boolean takeRole() {
         return Systems.takeRole(this);
     };
+
     public void addMoney(int money) {
         this.money += money;
     };
+
     public void removeMoney(int money) {
         this.money -= money;
     };
