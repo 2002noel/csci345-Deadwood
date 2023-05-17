@@ -9,6 +9,8 @@ public class Systems {
     private int day;
     private Banker banker;
     private int curTurn;
+
+    public static Scanner scan;
     public Die die;
     public Board board;
 
@@ -20,6 +22,7 @@ public class Systems {
         day = 1;
         curTurn = 0;
         die = new Die();
+        scan = new Scanner(System.in);
     }
 
     // create the getInstance method
@@ -167,7 +170,8 @@ public class Systems {
             ply.getlocation().finishShot();
             return true;
         }
-        return false;
+        System.out.println("Acting failed");
+        return true;
         // check how many scenes are left on the board, if there are 1 or less, end the
         // day
     }
@@ -196,6 +200,14 @@ public class Systems {
             return false;
         }
         System.out.println("Available roles:");
+        for (Roles role : scene.getRoles()) {
+            // check if the role is taken, if it is, dont print, else print
+            if (role.getIsTaken() == false) {
+                System.out.println(role.getName());
+
+            }
+        }
+        System.out.println("Extras:");
         for (Roles role : set.getRoles()) {
             // check if the role is taken, if it is, dont print, else print
             if (role.getIsTaken() == false) {
@@ -203,30 +215,22 @@ public class Systems {
             }
         }
 
-        for (Roles role : scene.getRoles()) {
-            // check if the role is taken, if it is, dont print, else print
-            if (role.getIsTaken() == false) {
-                System.out.println(role.getName());
-            }
-        }
-
         System.out.println("Which role would you like to take?");
-        Scanner scan = new Scanner(System.in);
         String role = scan.nextLine();
-        scan.close();
         for (Roles r : set.getRoles()) {
-            if (r.getName() == role) {
+            if (r.getName().equals(role)) {
                 ply.setRole(r);
+                r.setIsTaken(true);
                 return true;
             }
-
-            for (Roles r2 : scene.getRoles()) {
-                if (r2.getName() == role) {
-                    ply.setRole(r2);
-                    return true;
-                }
+        }
+        System.out.println("Main roles:");
+        for (Roles r2 : scene.getRoles()) {
+            if (r2.getName().equals(role)) {
+                ply.setRole(r2);
+                r2.setIsTaken(true);
+                return true;
             }
-
         }
         return false;
     }
@@ -263,7 +267,6 @@ public class Systems {
 
     public void startGame() {
         // tell every player on the list to make a turn
-        Scanner scan = new Scanner(System.in);
         while (true) {
             for (Player ply : players) {
                 // ask a player what they want to do
@@ -285,12 +288,11 @@ public class Systems {
                 System.out.println("6. End Turn");
                 System.out.println("7. End Game");
     
-                int choice = Integer.parseInt(scan.nextLine());
+                int choice = Systems.getIntFromUser();
     
                 if(choice == 7){
                     this.day = 5;
                     endDay();
-                    scan.close();
                     return;
                 }
     
@@ -307,13 +309,11 @@ public class Systems {
                     System.out.println("5. Take Role");
                     System.out.println("6. End Turn");
                     System.out.println("7. Quit Game");
-                    while (!scan.hasNextLine()) {}
-                    choice = Integer.parseInt(scan.nextLine());
+                    choice = Systems.getIntFromUser();
     
                     if(choice == 7){
                         this.day = 5;
                         endDay();
-                        scan.close();
                         return;
                     }
     
@@ -323,7 +323,6 @@ public class Systems {
                 //check how many scenes are left on the board, if there are 1 or less, end the day
                 if(board.getScenes().length <= 1){
                     endDay();
-                    scan.close();
                     return;
                 }
             }
@@ -332,5 +331,18 @@ public class Systems {
 
         //scan.close();
 
+    }
+
+    public static int getIntFromUser() {
+        while (!scan.hasNextInt()) {
+            System.out.println("Invalid option. Please enter an integer.");
+            //scan.reset();
+            if (scan.hasNextLine())
+                scan.nextLine();
+        }
+        int ret = scan.nextInt();
+        if (scan.hasNextLine())
+            scan.nextLine();
+        return ret;
     }
 }
