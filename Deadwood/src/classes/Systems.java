@@ -90,7 +90,7 @@ public class Systems {
         int[] scores = new int[players.length];
         for(int i = 0; i < players.length; i++){
             scores[i]=(players[i].getCredits() + players[i].getMoney() + players[i].getDice().getRank()*5);
-            System.out.println("Player " + (i+1) + " has a score of " + scores[i] + ".");
+            System.out.println("Player " + (i+1) + " Rank: " + players[i].getDice().getRank() + " Credits: " + players[i].getCredits() + " Dollars: " + players[i].getMoney() + " Score: " + scores[i]);
             if(scores[i] > max){
                 max = scores[i];
                 winner = i;
