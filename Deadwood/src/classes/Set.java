@@ -1,5 +1,8 @@
 package classes;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class Set {
 
     private int shotsLeft;
@@ -45,11 +48,7 @@ public class Set {
         return name.equals("Trailers") || name.equals("Casting Office");
     }
 
-    //getter and setter for name
-
-    public void setName(String name){
-        this.name = name;
-    }
+    public boolean isWrapped() { return scene == null; }
 
     public String getName(){
         return name;
@@ -80,8 +79,43 @@ public class Set {
     }
 
     public void finishScene() {
+        boolean shouldPay = false;
+        int amountToPay = scene.getBudget();
+        for (Roles r : scene.getRoles()) {
+            if (r.getIsTaken() != null) {
+                shouldPay = true;
+                break;
+            }
+        }
 
-        return;
+        if (shouldPay) {
+            int[] payout = new int[amountToPay];
+            for (int i = 0; i < amountToPay; i++) {
+                payout[i] = Systems.getInstance().die.rollDie();
+            }
+            Arrays.sort(payout); // must be sorted from least to greatest
+            Roles[] roles = scene.getRoles();
+            int rolesIndex = roles.length - 1;
+            while (amountToPay > 0) { // assumes that roles are ordered least rank to greatest rank
+                if (roles[rolesIndex].getIsTaken() != null) {
+                    amountToPay--;
+                    roles[rolesIndex].getIsTaken().addMoney(payout[amountToPay]);
+                }
+                rolesIndex--;
+                if (rolesIndex < 0) {
+                    rolesIndex = roles.length - 1;
+                }
+            }
+
+            // payout to the extras
+            for (Roles r : roles) {
+                Player ply = r.getIsTaken();
+                if (ply != null) {
+                    ply.addMoney(r.getRank());
+                }
+            }
+        }
+        scene = null;
     }
 
     public void finishShot(){
