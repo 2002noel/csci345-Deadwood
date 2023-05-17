@@ -19,6 +19,7 @@ public class Player {
         this.rank = rank;
         role = null;
         dice = new Die();
+        location = null;
     }
 
     int rollDice() {
@@ -41,8 +42,16 @@ public class Player {
     }
 
     public boolean move(Set set) {
-        // verify that set is adjacent to current set
-        return Systems.move(this, set);
+        // verify that set is adjacent to the location
+        // if so, move the player to the set
+        // if not, return false
+
+        if(this.location.isAdjacent(set)){
+            return Systems.move(this, set);
+        }   
+        else{
+            return false;
+        }
     };
 
     public boolean useTurn(int choice) {
@@ -91,6 +100,7 @@ public class Player {
             }
             Scanner sc = new Scanner(System.in);
             int choice2 = sc.nextInt();
+            System.out.println("Moving to " + this.location.getAdjacentSet()[choice2].getName() + "...");
             return move(this.location.getAdjacentSet()[choice2]);
 
 
@@ -186,8 +196,8 @@ public class Player {
         return location;
     };
 
-    public void setlocation(Set location) {
-        this.location = location;
+    public void setlocation(Set locations) {
+        this.location = locations;
     };
 
     public Roles getRole() {

@@ -132,16 +132,16 @@ public class Systems {
     }
 
     public static boolean move(Player ply, Set set) {
-        // move the player to the set and change the location
-        // check if the set is adjacent to the player's current location
-        // if the set is adjacent, move the player
-        // else return false
-
-        if (set.isAdjacent(ply.getlocation())) {
-            ply.setlocation(set);
-            return true;
+        //check if the player is on a role
+        if(ply.getRole() != null){
+            return false;
         }
-        return false;
+
+        System.out.println(set.getName() + "is the new location");
+        //change the players location
+        ply.setlocation(set);
+        return true;
+        
     }
 
     public static boolean work(Player ply, Set set) {
@@ -172,6 +172,7 @@ public class Systems {
 
         // check if the player is on a role
         if (ply.getRole() != null) {
+            System.out.println("You are already on a role");
             return false;
         }
 
@@ -180,8 +181,11 @@ public class Systems {
         // if the player chooses a role, set the player's role to the role
         // else return false
         Set set = ply.getlocation();
-        if (set == null || set.isSpecial())
+        System.out.println(set.getName());
+        if (set == null) {
+            System.out.println("You are not on a set");
             return false;
+        }
         Scene scene = set.getScene();
         if (scene == null) {
             System.err.println("!!!SET MISSING SCENE!!!");
@@ -272,8 +276,8 @@ public class Systems {
     }
 
     public void startGame() {
-        System.out.println("Welcome to Deadwood!");
         // tell every player on the list to make a turn
+        while(true){
         for (Player ply : players) {
             // ask a player what they want to do
             // if choice is 1, rehearse
@@ -284,6 +288,7 @@ public class Systems {
             // if choice is 6, end turn
             // if choice is 7, quit game
             System.out.println("It is Player " + ply.getid() + "'s turn.");
+            System.out.println("You are at " + ply.getlocation().getName() + ".");
             System.out.println("What would you like to do?");
             System.out.println("1. Rehearse");
             System.out.println("2. Act");
@@ -317,6 +322,8 @@ public class Systems {
                 choice = Integer.parseInt(System.console().readLine());
 
                 if(choice == 7){
+                    this.day = 5;
+                    endDay();
                     return;
                 }
 
@@ -328,6 +335,7 @@ public class Systems {
                 endDay();
                 return;
             }
+        }
 
         }
 
