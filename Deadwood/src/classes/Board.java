@@ -100,37 +100,37 @@ public class Board {
     private void buildScenes() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    Document dom = builder.parse(new File("./cards.xml"));
-    Element root = dom.getDocumentElement();
-    NodeList cardList = root.getElementsByTagName("card");
-    int numCards = cardList.getLength();
-    scenes = new Scene[numCards];
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document dom = builder.parse(new File("./cards.xml"));
+            Element root = dom.getDocumentElement();
+            NodeList cardList = root.getElementsByTagName("card");
+            int numCards = cardList.getLength();
+            scenes = new Scene[numCards];
 
-    for (int i = 0; i < numCards; i++) {
-        Element cardElement = (Element) cardList.item(i);
-        String name = cardElement.getAttribute("name");
-        int budget = Integer.parseInt(cardElement.getAttribute("budget"));
-        NodeList sceneList = cardElement.getElementsByTagName("scene");
-        Element sceneElement = (Element) sceneList.item(0);
-        int sceneNum = Integer.parseInt(sceneElement.getAttribute("number"));
-        String description = sceneElement.getTextContent().trim();
+            for (int i = 0; i < numCards; i++) {
+                Element cardElement = (Element) cardList.item(i);
+                String name = cardElement.getAttribute("name");
+                int budget = Integer.parseInt(cardElement.getAttribute("budget"));
+                NodeList sceneList = cardElement.getElementsByTagName("scene");
+                Element sceneElement = (Element) sceneList.item(0);
+                int sceneNum = Integer.parseInt(sceneElement.getAttribute("number"));
+                String description = sceneElement.getTextContent().trim();
 
-        NodeList partList = cardElement.getElementsByTagName("part");
-        int numRoles = partList.getLength();
-        Roles[] roles = new Roles[numRoles];
+                NodeList partList = cardElement.getElementsByTagName("part");
+                int numRoles = partList.getLength();
+                Roles[] roles = new Roles[numRoles];
 
-        for (int j = 0; j < numRoles; j++) {
-            Element partElement = (Element) partList.item(j);
-            String roleName = partElement.getAttribute("name");
-            int roleLevel = Integer.parseInt(partElement.getAttribute("level"));
-            roles[j] = new Roles(roleName, roleLevel);
-        }
+                for (int j = 0; j < numRoles; j++) {
+                    Element partElement = (Element) partList.item(j);
+                    String roleName = partElement.getAttribute("name");
+                    int roleLevel = Integer.parseInt(partElement.getAttribute("level"));
+                    roles[j] = new Roles(roleName, roleLevel);
+                }
 
-        scenes[i] = new Scene(name, budget, sceneNum);
-        scenes[i].setDescription(description);
-        scenes[i].setRoles(roles);
-    }
+                scenes[i] = new Scene(name, budget, sceneNum);
+                scenes[i].setDescription(description);
+                scenes[i].setRoles(roles);
+            }
         } catch (Exception e) {
         }
     }
