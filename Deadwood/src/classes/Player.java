@@ -46,12 +46,10 @@ public class Player {
         // if so, move the player to the set
         // if not, return false
 
-        if(this.location.isAdjacent(set)){
+        if (this.location.isAdjacent(set) && role == null) {
             return Systems.move(this, set);
         }   
-        else{
-            return false;
-        }
+        return false;
     };
 
     public boolean useTurn(int choice) {
@@ -93,6 +91,10 @@ public class Player {
         }
         else if(choice == 4){
             //show adjacent sets
+            if (role != null) {
+                System.out.println("Unable to move until set is wrapped");
+                return false;
+            }
             System.out.println("Where would you like to move?");
             for(int i = 0; i < this.location.getAdjacentSet().length; i++){
                 System.out.println(i + ". " + this.location.getAdjacentSet()[i].getName());
@@ -106,7 +108,7 @@ public class Player {
             return move(this.location.getAdjacentSet()[choice2]);
 
         }
-        else if(choice == 5){
+        else if(choice == 5) {
             return takeRole();
         }
         else if(choice == 6){
