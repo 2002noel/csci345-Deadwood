@@ -35,6 +35,10 @@ public class Board {
     public Scene[] getScenes() {
         return scenes;
     }
+
+    public int getScenesLeft() {
+        return scenesLeft;
+    }
     
     public boolean setLocation(Player ply, Set set) {
         for (int i = 0; i < players.length; i++) {
@@ -50,37 +54,11 @@ public class Board {
         }
         return false;
     }
-    
-    public Set getLocation(Player ply) {
-        for (int i = 0; i < players.length; i++) {
-            if (players[i] == ply) {
-                return sets[location[i]];
-            }
-        }
-        
-        return null;
-    }
-
-    public void setSets(Set[] sets) {
-        this.sets = sets;
-    }
-
-    public Set[] getSets() {
-        return sets;
-    }
 
     public void setPlayers(Player[] players) {
         this.players = players;
     }
 
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    public void setLocation(int[] location) {
-        this.location = location;
-    }
-    
     public Set getSetByName(String name) {
         for (int k = 0; k < sets.length; k++) {
             if (sets[k].getName().equals(name)) {

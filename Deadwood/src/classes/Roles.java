@@ -1,6 +1,6 @@
 package classes;
 
-public class Roles{
+public class Roles {
     private int rank;
     private String name;
     private Player takenBy;
@@ -11,16 +11,8 @@ public class Roles{
         takenBy = null;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
-
     public String getName(){
         return name;
-    }
-
-    public void setRank(int rank){
-        this.rank = rank;
     }
 
     public int getRank(){
@@ -34,7 +26,4 @@ public class Roles{
     public Player getIsTaken(){
         return takenBy;
     }
-
-
-    
 }

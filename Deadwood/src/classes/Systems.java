@@ -2,7 +2,7 @@ package classes;
 import java.util.Scanner;
 
 public class Systems {
-    // this class vaildates moves and checks for win conditions
+    // this class validates moves and checks for win conditions
     // this class also handles the game loop
     // this class is a singleton
     private Player[] players;
@@ -37,24 +37,8 @@ public class Systems {
         return day;
     }
 
-    public void incrementDay() {
-        day++;
-    }
-
     public void setPlayers(Player[] players) {
         this.players = players;
-    }
-
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public void setDie(Die die) {
-        this.die = die;
     }
 
     public void setBoard(Board board) {
@@ -63,10 +47,6 @@ public class Systems {
 
     public void setBanker(Banker banker) {
         this.banker = banker;
-    }
-
-    public Die getDie() {
-        return die;
     }
 
     public Board getBoard() {
@@ -220,8 +200,7 @@ public class Systems {
         // day
     }
 
-    public static boolean 
-    takeRole(Player ply) {
+    public static boolean takeRole(Player ply) {
 
         // check if the player is on a role
         if (ply.getRole() != null) {
@@ -382,7 +361,7 @@ public class Systems {
                 }
     
                 //check how many scenes are left on the board, if there are 1 or less, end the day
-                if(board.getScenes().length <= 1){
+                if(board.getScenesLeft() <= 1){
                     endDay();
                     return;
                 }
@@ -397,7 +376,6 @@ public class Systems {
     public static int getIntFromUser() {
         while (!scan.hasNextInt()) {
             System.out.println("Invalid option. Please enter an integer.");
-            //scan.reset();
             if (scan.hasNextLine())
                 scan.nextLine();
         }

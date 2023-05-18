@@ -1,6 +1,5 @@
 package classes;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Set {
@@ -25,15 +24,6 @@ public class Set {
         this.scene = scene;
     }
 
-    //getter and setter for shotsLeft
-    public void setShotsLeft(int shotsLeft){
-        this.shotsLeft = shotsLeft;
-    }
-
-    public int getShotsLeft(){
-        return shotsLeft;
-    }
-
     //getter and setter for scene
 
     public void setScene(Scene scene){
@@ -47,8 +37,6 @@ public class Set {
     public boolean isSpecial() {
         return name.equals("Trailers") || name.equals("Casting Office");
     }
-
-    public boolean isWrapped() { return scene == null; }
 
     public String getName(){
         return name;
@@ -155,7 +143,6 @@ public class Set {
         return false;
     }
 
-
     public void setRoles(Roles[] roles){
         this.roles = roles;
     }
@@ -163,6 +150,4 @@ public class Set {
     public Roles[] getRoles(){
         return roles;
     }
-
-
 }

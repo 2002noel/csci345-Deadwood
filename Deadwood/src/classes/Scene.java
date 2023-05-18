@@ -22,16 +22,8 @@ public class Scene {
         this.description = description;
     }
 
-    public void setBudget(int budget){
-        this.budget = budget;
-    }
-
     public String getName(){
         return name;
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     public Roles[] getRoles(){

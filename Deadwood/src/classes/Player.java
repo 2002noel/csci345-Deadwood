@@ -8,7 +8,6 @@ public class Player {
     private int credits;
     private int money;
     private int chips;
-    private int rank;
     private Die dice;
     private Set location;
     private Roles role;
@@ -16,7 +15,7 @@ public class Player {
 
     public Player(int numCredits, int rank) {
         credits = numCredits;
-        this.rank = rank;
+        chips = 0;
         role = null;
         dice = new Die();
         dice.setRank(rank);
@@ -24,13 +23,7 @@ public class Player {
     }
 
     int rollDice() {
-        // if there are chips, add chips to roll, else just roll
-        if (chips > 0) {
             return dice.rollDie() + chips;
-        } else {
-            return dice.rollDie();
-        }
-
     };
 
     public void setid(int id) {
@@ -180,15 +173,6 @@ public class Player {
         }
     };
 
-    public boolean upgradeRank(int rank, boolean withcredits) {
-        // call the Deadwood method upgradeRank
-        return Systems.upgradeRank(this, rank, withcredits);
-    };
-
-    public int calcScore() {
-        return -1;
-    };
-
     public Die getDice() {
         return dice;
     };
@@ -199,10 +183,6 @@ public class Player {
 
     public int getMoney() {
         return money;
-    };
-
-    public void addChips(int chips) {
-        this.chips += chips;
     };
 
     public void removeChips() {
