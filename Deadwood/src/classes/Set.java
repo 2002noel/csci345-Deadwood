@@ -79,6 +79,7 @@ public class Set {
     }
 
     public void finishScene() {
+        System.out.println("That's a wrap!");
         boolean shouldPay = false;
         int amountToPay = scene.getBudget();
         for (Roles r : scene.getRoles()) {
@@ -100,9 +101,11 @@ public class Set {
             int rolesIndex = roles.length;
             while (amountToPay > 0) { // assumes that roles are ordered least rank to greatest rank
                 rolesIndex--;
-                if (roles[rolesIndex].getIsTaken() != null) {
+                Player ply = roles[rolesIndex].getIsTaken();
+                if (ply != null) {
                     amountToPay--;
-                    roles[rolesIndex].getIsTaken().addMoney(payout[amountToPay]);
+                    System.out.println("Paying out $" + payout[amountToPay] + " to player " + ply.getid());
+                    ply.addMoney(payout[amountToPay]);
                 }
                 if (rolesIndex == 0) {
                     rolesIndex = roles.length;
@@ -115,9 +118,11 @@ public class Set {
                 if (ply != null) {
                     ply.removeChips();
                     ply.addMoney(r.getRank());
+                    System.out.println("Paying out $" + r.getRank() + " to player " + ply.getid());
                 }
             }
         } else {
+            System.out.println("No players on card so scene doesn't pay out");
             for (Roles r : roles) {
                 Player ply = r.getIsTaken();
                 if (ply != null) {
