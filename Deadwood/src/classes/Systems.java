@@ -9,6 +9,7 @@ public class Systems {
     private int day;
     private Banker banker;
     private int curTurn;
+    private int scenesLeft;
 
     public static Scanner scan;
     public Die die;
@@ -23,6 +24,7 @@ public class Systems {
         curTurn = 0;
         die = new Die();
         scan = new Scanner(System.in);
+        scenesLeft = 10;
     }
 
     // create the getInstance method
@@ -263,7 +265,7 @@ public class Systems {
                     System.out.println("Role is taken");
                     return false;
                 }
-                if(r2.getRank() > ply.getDice().getRank()){
+                if(r2.getRank() > ply.getDice().getRank()) {
                     System.out.println("You do not have a high enough rank");
                     return false;
                 }
@@ -297,12 +299,17 @@ public class Systems {
         }
 
         board.shuffleScenes();
+        scenesLeft = 10;
         System.out.println("Everyone at the Trailers!");
     }
 
     public void endDay() {
         // add 1 to the day counter
         day++;
+    }
+
+    public void finishScene() {
+        scenesLeft--;
     }
 
     public void startGame() {
@@ -361,7 +368,8 @@ public class Systems {
                 }
     
                 //check how many scenes are left on the board, if there are 1 or less, end the day
-                if(board.getScenesLeft() <= 1){
+                if(scenesLeft < 1) {
+                    System.out.println("All scenes are finished!");
                     endDay();
                     return;
                 }

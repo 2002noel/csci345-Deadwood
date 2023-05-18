@@ -67,6 +67,7 @@ public class Set {
     }
 
     public void finishScene() {
+        Systems.getInstance().finishScene();
         System.out.println("That's a wrap!");
         boolean shouldPay = false;
         int amountToPay = scene.getBudget();
