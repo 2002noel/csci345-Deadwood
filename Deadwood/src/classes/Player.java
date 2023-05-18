@@ -110,20 +110,14 @@ public class Player {
                 System.out.println("2. No");
                 int choice3 = Systems.getIntFromUser();
                 if (choice3 == 1) {
-                    boolean check2 = takeRole();
-                    while (!check2) {
+                    while(!takeRole()){
                         System.out.println("Would you like to take a role?");
                         System.out.println("1. Yes");
                         System.out.println("2. No");
                         choice3 = Systems.getIntFromUser();
-                        if (choice3 == 1) {
-                            check2 = takeRole();
-                        } else if (choice3 == 2) {
-                            return true;
-                        } else {
-                            return false;
-                        }
                     }
+
+                    return true;
                 } else if (choice3 == 2) {
                     return true;
                 } else {
@@ -157,8 +151,6 @@ public class Player {
         } else {
             return false;
         }
-
-        return false;
 
     };
 
