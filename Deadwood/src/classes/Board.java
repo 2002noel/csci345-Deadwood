@@ -32,14 +32,6 @@ public class Board {
         }
     }
 
-    public Scene[] getScenes() {
-        return scenes;
-    }
-
-    public int getScenesLeft() {
-        return scenesLeft;
-    }
-    
     public boolean setLocation(Player ply, Set set) {
         for (int i = 0; i < players.length; i++) {
             if (players[i] == ply) {
