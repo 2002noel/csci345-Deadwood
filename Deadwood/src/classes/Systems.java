@@ -220,7 +220,8 @@ public class Systems {
         // day
     }
 
-    public static boolean takeRole(Player ply) {
+    public static boolean 
+    takeRole(Player ply) {
 
         // check if the player is on a role
         if (ply.getRole() != null) {
