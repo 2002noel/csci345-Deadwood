@@ -1,6 +1,9 @@
+import java.awt.*;
 import java.util.*;
 import java.io.*;
 import classes.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 
 public class Deadwood {
@@ -9,6 +12,28 @@ public class Deadwood {
         //create a new game
         int numPlayers = 0;
         //ask for number of players
+        JFrame frame = new JFrame("Deadwood");//creating instance of JFrame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        String[] numPlayerSelection = {"2", "3", "4", "5", "6", "7", "8"};
+        JSpinner select = new JSpinner(new SpinnerListModel(numPlayerSelection));//creating instance of JButton
+        select.setBounds(80,00,50, 40); //x axis, y axis, width, height
+        select.setMaximumSize(new Dimension(50, 40));
+        frame.add(select);//adding button in JFrame
+
+        JButton startButton = new JButton("Start Game");
+        startButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("pressed");
+            }
+        });
+        startButton.setBounds(0, 60, 100, 30);
+        frame.add(startButton);
+        //frame.setSize(10, 200);
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        frame.pack();
+        frame.setVisible(true);
         Scanner sc = new Scanner(System.in);
         if (args.length < 1) {
             System.out.println("How many players are playing?");
