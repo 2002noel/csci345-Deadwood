@@ -53,13 +53,10 @@ public class Systems {
             gamePanel.setSize(1200, 900);
             //gameFrame.setSize(1200, 900);
             try {
-                BufferedImage myPicture = ImageIO.read(new File("board.jpg"));
+                BufferedImage myPicture = ImageIO.read(new File("./images/board.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(myPicture));
                 boardPanel = picLabel;
                 picLabel.setBounds(0, 0, 1200, 900);
-                JButton but = new JButton("Cum");
-                but.setBounds(40, 40, 100, 100);
-                picLabel.add(but);
                 gamePanel.add(picLabel);
                 gamePanel.revalidate();
                 gameFrame.pack();
