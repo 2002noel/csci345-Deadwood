@@ -186,8 +186,8 @@ public class Systems {
 
         System.out.println(set.getName() + " is the new location");
         //change the players location
-        board.setLocation(ply, set);
         ply.setlocation(set);
+        board.setLocation(ply, set);
         return true;
         
     }
@@ -241,7 +241,7 @@ public class Systems {
         // day
     }
 
-    public static boolean takeRole(Player ply) {
+    public boolean takeRole(Player ply) {
 
         // check if the player is on a role
         if (ply.getRole() != null) {
@@ -295,6 +295,7 @@ public class Systems {
                 }
                 ply.setRole(r);
                 r.setIsTaken(ply);
+                board.updateLocations(set);
                 return true;
             }
         }
@@ -462,15 +463,15 @@ public class Systems {
 
     public void endturn(){
         curTurn = (curTurn + 1) % players.length;
-            System.out.println("It is Player " + players[curTurn].getid() + "'s turn.");
-            //set playerpanel to the players[curturn]'s info and display it
-            playerPanel.removeAll();
-            playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
-            playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
-            playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
-            playerPanel.add(new JLabel("Role: " + players[curTurn].getRole()));
-            gamePanel.revalidate();
-            gamePanel.repaint();
+        System.out.println("It is Player " + players[curTurn].getid() + "'s turn.");
+        //set playerpanel to the players[curturn]'s info and display it
+        playerPanel.removeAll();
+        playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
+        playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
+        playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
+        playerPanel.add(new JLabel("Role: " + players[curTurn].getRole()));
+        gamePanel.revalidate();
+        gamePanel.repaint();
     }
 
 

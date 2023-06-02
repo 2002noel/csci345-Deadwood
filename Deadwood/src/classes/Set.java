@@ -15,6 +15,7 @@ public class Set extends JButton {
         setOpaque(false);
         setContentAreaFilled(false);
         setBorderPainted(false);
+        setVisible(false);
     }
 
     public Set(String name) {
