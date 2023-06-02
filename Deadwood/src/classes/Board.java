@@ -32,12 +32,38 @@ public class Board {
         }
     }
 
+    private void updateLocations(Set set) {
+        int numOfPlayersOffCard = 0;
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getlocation() == set && players[i].getRole() == null) {
+                if (numOfPlayersOffCard * players[i].getWidth() > set.getWidth()) {
+                    players[i].setLocation(set.getX() + (numOfPlayersOffCard - 1 - set.getWidth()/players[i].getWidth()) * players[i].getWidth(),
+                            set.getY() + players[i].getHeight());
+                }
+                else
+                    players[i].setLocation(set.getX() + numOfPlayersOffCard * players[i].getWidth(),
+                            set.getY());
+                numOfPlayersOffCard++;
+            }
+        }
+    }
+
     public boolean setLocation(Player ply, Set set) {
         for (int i = 0; i < players.length; i++) {
-            if (players[i] == ply) {
+            if (players[i].equals(ply)) {
                 for (int k = 0; k < sets.length; k++) {
-                    if (set == sets[k]) {
+                    if (set.equals(sets[k])) {
                         location[i] = k;
+                        ply.setLocation(set.getLocation());
+                        updateLocations(set);
+                        return true;
+                    }
+                }
+                for (int k = 0; k < specialSets.length; k++) {
+                    if (specialSets[k] == set) {
+                        location[i] = sets.length + k;
+                        ply.setLocation(set.getLocation());
+                        updateLocations(set);
                         return true;
                     }
                 }
@@ -49,6 +75,7 @@ public class Board {
 
     public void setPlayers(Player[] players) {
         this.players = players;
+        location = new int[players.length];
     }
 
     public Set getSetByName(String name) {
@@ -218,6 +245,8 @@ public class Board {
                     }
                 }
             }
+            specialSets[0].setBounds(991, 248, 194, 201);
+            specialSets[1].setBounds(9, 459, 208, 209);
             Systems.getInstance().getBoardPanel().repaint();
         } catch (Exception e) {
             System.err.println(e);

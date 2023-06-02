@@ -1,8 +1,10 @@
 package classes;
 
+import java.awt.image.BufferedImage;
 import java.util.*;
 import classes.Player;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.*;
 
@@ -14,6 +16,17 @@ public class Player extends JLabel {
     private Set location;
     private Roles role;
     private int id;
+    private static String[] idToColor = {
+            "b",
+            "c",
+            "g",
+            "o",
+            "p",
+            "r",
+            "v",
+            "w",
+            "y"
+    };
 
     public Player(int numCredits, int rank) {
         credits = numCredits;
@@ -30,6 +43,13 @@ public class Player extends JLabel {
 
     public void setid(int id) {
         this.id = id;
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("./images/dice/" + idToColor[id - 1] + "1.png"));
+            setIcon(new ImageIcon(myPicture));
+            setSize(40, 40);
+        } catch (Exception e) {
+            System.exit(1);
+        }
     }
 
     public int getid() {
@@ -42,7 +62,7 @@ public class Player extends JLabel {
         // if not, return false
 
         if (this.location.isAdjacent(set) && role == null) {
-            return Systems.move(this, set);
+            return Systems.getInstance().move(this, set);
         }
         return false;
     };

@@ -100,7 +100,8 @@ public class Deadwood {
         //set the board with the players
         game.getBoard().setPlayers(players);
         //set all the locations to Trailers
-        for(int i = 0; i < numPlayers; i++){
+        for(int i = 0; i < numPlayers; i++) {
+            game.getBoardPanel().add(players[i]);
             game.getBoard().setLocation(players[i], game.getBoard().getSetByName("Trailers"));
         }
         //set the board with the banker

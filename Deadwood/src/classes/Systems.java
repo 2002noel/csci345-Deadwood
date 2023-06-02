@@ -171,7 +171,7 @@ public class Systems {
         return false;
     }
 
-    public static boolean move(Player ply, Set set) {
+    public boolean move(Player ply, Set set) {
         //check if the player is on a role
         if(ply.getRole() != null){
             return false;
@@ -179,6 +179,7 @@ public class Systems {
 
         System.out.println(set.getName() + " is the new location");
         //change the players location
+        board.setLocation(ply, set);
         ply.setlocation(set);
         return true;
         
