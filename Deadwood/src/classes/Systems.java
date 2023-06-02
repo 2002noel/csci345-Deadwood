@@ -2,6 +2,7 @@ package classes;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Handler;
 import java.io.File;
@@ -184,7 +185,6 @@ public class Systems {
             return false;
         }
 
-        System.out.println(set.getName() + " is the new location");
         //change the players location
         ply.setlocation(set);
         board.setLocation(ply, set);
@@ -359,15 +359,16 @@ public class Systems {
             "End Turn",
             "End Game"
     };
+
+    JPanel buttonPanel;
     public void startGame() {
         startDay();
 
-        JPanel buttonPanel = new JPanel();
+        buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < choices.length; i++) {
             JButton choice = new JButton(choices[i]);
             choice.addActionListener(f -> {
-                System.out.println (choice.getLabel());
                 // call handleChoice with the choice
                 handleChoice(choice.getLabel());
                 
@@ -461,15 +462,31 @@ public class Systems {
 
     }
 
+    private void setVisibleOptions() {
+        for (int i = 0; i < buttonPanel.getComponentCount(); i++) {
+            JButton butt = (JButton) buttonPanel.getComponent(i);
+            butt.setVisible(true);
+        }
+    }
+
+    private void setVisibleOptions(String[] opts) {
+        setVisibleOptions();
+        for (int i = 0; i < buttonPanel.getComponentCount(); i++) {
+            JButton butt = (JButton) buttonPanel.getComponent(i);
+            if (!Arrays.asList(opts).contains(butt.getText()))
+                butt.setVisible(false);
+        }
+    }
+
     public void endturn(){
         curTurn = (curTurn + 1) % players.length;
-        System.out.println("It is Player " + players[curTurn].getid() + "'s turn.");
         //set playerpanel to the players[curturn]'s info and display it
         playerPanel.removeAll();
         playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
         playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
         playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
         playerPanel.add(new JLabel("Role: " + players[curTurn].getRole()));
+        setVisibleOptions();
         gamePanel.revalidate();
         gamePanel.repaint();
     }
@@ -517,9 +534,9 @@ public class Systems {
                     break;
                 }
             }
-            endturn();
-            
+            //endturn();
 
+            setVisibleOptions(new String[] {"End Turn", "Take Role"});
             
             
 
