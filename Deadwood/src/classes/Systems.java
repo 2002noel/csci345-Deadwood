@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
+import java.util.logging.Handler;
 import java.io.File;
 import javax.imageio.*;
 import java.awt.image.*;
@@ -14,8 +15,9 @@ public class Systems {
     private Player[] players;
     private int day;
     private Banker banker;
-    private int curTurn;
+    private int curTurn = 0;
     private int scenesLeft;
+    private int lastday;
 
     public static Scanner scan;
     public Die die;
@@ -23,6 +25,7 @@ public class Systems {
     private JPanel gamePanel;
     private JLabel boardPanel;
     private JFrame gameFrame;
+    private JPanel playerPanel;
 
     // create the singleton
     private static Systems instance = null;
@@ -88,6 +91,10 @@ public class Systems {
 
     public Banker getBanker() {
         return banker;
+    }
+
+    public void setLastDay(int lastday) {
+        this.lastday = lastday;
     }
 
     //end game
@@ -315,7 +322,6 @@ public class Systems {
         // reset the shots on the sets
         // reset the players roles
         // reset the players rehearsal tokens
-
         // change all the players back to the trailer
         for (Player ply : players) {
             // from the board, get the trailer and set the player's location to the trailer
@@ -353,16 +359,33 @@ public class Systems {
             "End Game"
     };
     public void startGame() {
+        startDay();
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < choices.length; i++) {
             JButton choice = new JButton(choices[i]);
             choice.addActionListener(f -> {
                 System.out.println (choice.getLabel());
+                // call handleChoice with the choice
+                handleChoice(choice.getLabel());
+                
             });
             buttonPanel.add(choice);
         }
         gamePanel.add(buttonPanel);
+
+        //set playerpanel to the players[curturn]'s info and display it
+
+        playerPanel = new JPanel();
+        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
+        playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
+        playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
+        playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
+        playerPanel.add(new JLabel("Role: " + players[curTurn].getRole()));
+        gamePanel.add(playerPanel);
+
+
         gameFrame.pack();
         gamePanel.repaint();
         // tell every player on the list to make a turn
@@ -434,6 +457,55 @@ public class Systems {
         }*/
 
         //scan.close();
+
+    }
+
+    public void endturn(){
+        curTurn = (curTurn + 1) % players.length;
+            System.out.println("It is Player " + players[curTurn].getid() + "'s turn.");
+            //set playerpanel to the players[curturn]'s info and display it
+            playerPanel.removeAll();
+            playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
+            playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
+            playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
+            playerPanel.add(new JLabel("Role: " + players[curTurn].getRole()));
+            gamePanel.revalidate();
+            gamePanel.repaint();
+    }
+
+
+
+    public void handleChoice(String choice) {
+        if(choice.equals("End Turn")){
+            //update the curTurn to the next player
+            endturn();
+        }else if(choice.equals("End Game")){
+            this.day = 5;
+            endgame();
+        }else if(choice.equals("Rehearse")){
+            boolean fin = players[curTurn].rehearse();
+            if(!fin){
+                //have a popup that says you can't rehearse without a role
+                JOptionPane.showMessageDialog(gameFrame, "You can't rehearse without a role!");
+            }else{
+                endturn();
+            }
+        }else if(choice.equals("Act")){
+            boolean fin = players[curTurn].act();
+            if(!fin){
+                //have a popup that says you can't act without a role
+                JOptionPane.showMessageDialog(gameFrame, "You can't act without a role!");
+            }else{
+                endturn();
+            }
+                
+            
+            
+
+        
+
+
+
 
     }
 
