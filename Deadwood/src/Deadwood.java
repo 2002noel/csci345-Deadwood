@@ -1,40 +1,49 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.rmi.server.ExportException;
 import java.util.*;
 import java.io.*;
 import classes.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
 
 
 public class Deadwood {
+    static JPanel gamePanel;
+    static JFrame gameFrame;
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
         //create a new game
         int numPlayers = 0;
         //ask for number of players
         JFrame frame = new JFrame("Deadwood");//creating instance of JFrame
+        gameFrame = frame;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gamePanel = new JPanel();
+        gamePanel.setBounds(0, 0, 900, 400);
+        frame.getContentPane().add(gamePanel);
         String[] numPlayerSelection = {"2", "3", "4", "5", "6", "7", "8"};
         JSpinner select = new JSpinner(new SpinnerListModel(numPlayerSelection));//creating instance of JButton
-        select.setBounds(80,00,50, 40); //x axis, y axis, width, height
+        select.setBounds(80, 00, 50, 40); //x axis, y axis, width, height
         select.setMaximumSize(new Dimension(50, 40));
-        frame.add(select);//adding button in JFrame
-
+        gamePanel.add(select);//adding button in JFrame
         JButton startButton = new JButton("Start Game");
         startButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("pressed");
+                System.out.println(select.getValue());
+                gamePanel.removeAll();
+                startGame(Integer.parseInt((String)select.getValue()));
             }
         });
-        startButton.setBounds(0, 60, 100, 30);
-        frame.add(startButton);
-        //frame.setSize(10, 200);
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        startButton.setBounds(-100, 60, 100, 30);
+        gamePanel.add(startButton);
+        gamePanel.setLayout(new BoxLayout(gamePanel, BoxLayout.X_AXIS));
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
         frame.pack();
         frame.setVisible(true);
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         if (args.length < 1) {
             System.out.println("How many players are playing?");
             numPlayers = sc.nextInt();
@@ -46,8 +55,9 @@ public class Deadwood {
         if (numPlayers < 2 || numPlayers > 8) {
             System.err.println("Invalid number of players");
             return;
-        }
-
+        }*/
+    }
+    static private void startGame(int numPlayers) {
         Systems game = Systems.getInstance();
 
         //assign a random player to be the banker
@@ -79,6 +89,8 @@ public class Deadwood {
             }
         }
 
+        game.setGamePanel(gamePanel, gameFrame);
+
         //set the players in the game
         game.setPlayers(players);
         //set the board in the game
@@ -94,8 +106,8 @@ public class Deadwood {
         //set the board with the banker
         //set the day in the game
 
-        
-        
+
+
         int lastday = 4;
         if(numPlayers < 4){
             lastday = 3;
@@ -111,9 +123,7 @@ public class Deadwood {
 
         game.endgame();
 
-        sc.close();
         Systems.scan.close();
-        
-    }
 
+    }
 }

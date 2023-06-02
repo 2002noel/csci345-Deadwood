@@ -2,9 +2,11 @@ package classes;
 
 import java.util.*;
 import classes.Player;
+
+import javax.swing.*;
 import java.io.*;
 
-public class Player {
+public class Player extends JLabel {
     private int credits;
     private int money;
     private int chips;

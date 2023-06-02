@@ -1,5 +1,11 @@
 package classes;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
+import java.io.File;
+import javax.imageio.*;
+import java.awt.image.*;
 
 public class Systems {
     // this class validates moves and checks for win conditions
@@ -14,6 +20,9 @@ public class Systems {
     public static Scanner scan;
     public Die die;
     public Board board;
+    private JPanel gamePanel;
+    private JLabel boardPanel;
+    private JFrame gameFrame;
 
     // create the singleton
     private static Systems instance = null;
@@ -33,6 +42,31 @@ public class Systems {
             instance = new Systems();
         }
         return instance;
+    }
+
+    public JPanel getGamePanel() { return gamePanel; }
+    public JLabel getBoardPanel() { return boardPanel; }
+    public void setGamePanel(JPanel panel, JFrame frame) {
+        gamePanel = panel;
+        gameFrame = frame;
+        //SwingUtilities.invokeLater(() -> {
+            gamePanel.setSize(1200, 900);
+            //gameFrame.setSize(1200, 900);
+            try {
+                BufferedImage myPicture = ImageIO.read(new File("board.jpg"));
+                JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+                boardPanel = picLabel;
+                picLabel.setBounds(0, 0, 1200, 900);
+                JButton but = new JButton("Cum");
+                but.setBounds(40, 40, 100, 100);
+                picLabel.add(but);
+                gamePanel.add(picLabel);
+                gamePanel.revalidate();
+                gameFrame.pack();
+            } catch (Exception e) {
+                System.exit(1);
+            }
+        //});
     }
 
     public int getDay() {
@@ -311,10 +345,30 @@ public class Systems {
     public void finishScene() {
         scenesLeft--;
     }
-
+    static String[] choices = {
+            "Rehearse",
+            "Act",
+            "Upgrade",
+            "Move",
+            "Take Role",
+            "End Turn",
+            "End Game"
+    };
     public void startGame() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        for (int i = 0; i < choices.length; i++) {
+            JButton choice = new JButton(choices[i]);
+            choice.addActionListener(f -> {
+                System.out.println (choice.getLabel());
+            });
+            buttonPanel.add(choice);
+        }
+        gamePanel.add(buttonPanel);
+        gameFrame.pack();
+        gamePanel.repaint();
         // tell every player on the list to make a turn
-        while (true) {
+        /*while (true) {
             for (Player ply : players) {
                 // ask a player what they want to do
                 // if choice is 1, rehearse
@@ -334,7 +388,11 @@ public class Systems {
                 System.out.println("5. Take Role");
                 System.out.println("6. End Turn");
                 System.out.println("7. End Game");
-    
+                while(gameFrame != null) {
+                    gamePanel.paintImmediately(0, 0, gamePanel.getWidth(), gamePanel.getHeight());
+                    System.out.println("loop");
+                }
+
                 int choice = Systems.getIntFromUser();
     
                 if(choice == 7){
@@ -375,7 +433,7 @@ public class Systems {
                 }
             }
 
-        }
+        }*/
 
         //scan.close();
 

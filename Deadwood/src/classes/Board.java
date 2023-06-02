@@ -189,11 +189,18 @@ public class Board {
                     System.err.println("Couldn't find set " + name);
                     return;
                 }
+                s.setLabel(name);
+                Systems.getInstance().getBoardPanel().add(s);
                 NodeList children = set.getChildNodes();
                 
                 for (int j = 0; j < children.getLength(); j++) {
                     Node sub = children.item(j);
                     String cname = sub.getNodeName();
+                    if (cname.equals("area")) {
+                        s.setLocation(Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue()), Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue()));
+                        s.setSize(Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue()), Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue()));
+                        continue;
+                    }
                     if (cname.equals("parts")) {
                         NodeList parts = sub.getChildNodes();
                         Roles[] rArr = new Roles[(int) Math.floor(parts.getLength() / 2.0)];
@@ -211,6 +218,7 @@ public class Board {
                     }
                 }
             }
+            Systems.getInstance().getBoardPanel().repaint();
         } catch (Exception e) {
             System.err.println(e);
         }

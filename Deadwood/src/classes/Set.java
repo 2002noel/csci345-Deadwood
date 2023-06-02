@@ -1,8 +1,9 @@
 package classes;
 
+import javax.swing.*;
 import java.util.Arrays;
 
-public class Set {
+public class Set extends JButton {
 
     private int shotsLeft;
     public Scene scene;
@@ -10,16 +11,25 @@ public class Set {
     private Set adjacentSets[] = new Set[1];
     private Roles[] roles; // off card roles
 
+    public Set() {
+        setOpaque(false);
+        setContentAreaFilled(false);
+        setBorderPainted(false);
+    }
+
     public Set(String name) {
+        this();
         this.name = name;
     }
     
     public Set(String name, int numShots) {
+        this();
         this.name = name;
         shotsLeft = numShots;
     }
     
     public Set(String name, Scene scene) {
+        this();
         this.name = name;
         this.scene = scene;
     }
