@@ -1,6 +1,11 @@
 package classes;
 
-public class Scene {
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+public class Scene extends JLabel {
     private int budget;
     private String name;
     private String description;
@@ -11,6 +16,12 @@ public class Scene {
         this.name = name;
         this.budget = budget;
         this.sceneNum = sceneNum;
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("./images/cards/" + (sceneNum < 10 ? "0" : "") + sceneNum + ".png"));
+            setIcon(new ImageIcon(myPicture));
+        } catch (Exception e) {
+            System.exit(1);
+        }
     }
 
     //create the getters and setters for the class
