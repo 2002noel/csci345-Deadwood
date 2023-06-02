@@ -2,6 +2,7 @@ package classes;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Handler;
@@ -241,9 +242,14 @@ public class Systems {
         // day
     }
 
-    public boolean takeRole(Player ply) {
+    public boolean takeRole(Player ply, Roles role) {
+        if (role.getIsTaken() != null || role.getRank() > ply.getDice().getRank())
+            return false;
+        ply.setRole(role);
+        role.setIsTaken(ply);
+        board.updateLocations(ply.getlocation());
 
-        // check if the player is on a role
+        /*// check if the player is on a role
         if (ply.getRole() != null) {
             System.out.println("You are already on a role");
             return false;
@@ -267,7 +273,7 @@ public class Systems {
         }
         System.out.println("Player rank: " + ply.getDice().getRank());
         System.out.println("Available roles:");
-        for (Roles role : scene.getRoles()) {
+        /*for (Roles role : scene.getRoles()) {
             // check if the role is taken, if it is, dont print, else print
             if (role.getIsTaken() == null) {
                 System.out.println("\"" + role.getName() + "\"" + " Rank: " + role.getRank());
@@ -313,8 +319,8 @@ public class Systems {
                 r2.setIsTaken(ply);
                 return true;
             }
-        }
-        return false;
+        }*/
+        return true;
     }
 
     public void startDay() {
@@ -375,6 +381,7 @@ public class Systems {
             });
             buttonPanel.add(choice);
         }
+        setVisibleOptions();
         gamePanel.add(buttonPanel);
 
         //set playerpanel to the players[curturn]'s info and display it
@@ -463,9 +470,14 @@ public class Systems {
     }
 
     private void setVisibleOptions() {
+        Player curPly = players[curTurn];
         for (int i = 0; i < buttonPanel.getComponentCount(); i++) {
             JButton butt = (JButton) buttonPanel.getComponent(i);
             butt.setVisible(true);
+            if ((butt.getText() == "Take Role" || butt.getText() == "Act" || butt.getText() == "Rehearse") && curPly.getlocation().isSpecial())
+                butt.setVisible(false);
+            else if ((butt.getText() == "Move" || butt.getText() == "Take Role") && curPly.getRole() != null)
+                butt.setVisible(false);
         }
     }
 
@@ -491,9 +503,8 @@ public class Systems {
         gamePanel.repaint();
     }
 
-
-
     public void handleChoice(String choice) {
+        Player curPly = players[curTurn];
         if(choice.equals("End Turn")){
             //update the curTurn to the next player
             endturn();
@@ -518,7 +529,7 @@ public class Systems {
             } 
         }else if(choice.equals("Move")){
             
-            Set location[] = players[curTurn].getlocation().getAdjacentSet();
+            Set location[] = curPly.getlocation().getAdjacentSet();
             //have a popup that shows the adjacent sets and ask which set they want to move to
             String[] options = new String[location.length];
             for (int i = 0; i < location.length; i++) {
@@ -530,16 +541,46 @@ public class Systems {
             //move the player to the location chosen
             for (int i = 0; i < location.length; i++) {
                 if(input.equals(location[i].getName())){
-                    players[curTurn].move(location[i]);
+                    curPly.move(location[i]);
                     break;
                 }
             }
             //endturn();
 
             setVisibleOptions(new String[] {"End Turn", "Take Role"});
-            
-            
+        } else if(choice.equals("Take Role")) {
+            Roles[] offCard = curPly.getlocation().getRoles();
+            Roles[] onCard = curPly.getlocation().getScene().getRoles();
+            //have a popup that shows the adjacent sets and ask which set they want to move to
+            ArrayList<String> options = new ArrayList<>();
+            for (Roles r : offCard) {
+                if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank())
+                    options.add(r.getName() + " | R" + r.getRank());
+            }
+            for (Roles r : onCard) {
+                if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank())
+                    options.add(r.getName() + " | R" + r.getRank());
+            }
+            if (options.isEmpty()) {
+                JOptionPane.showMessageDialog(gameFrame, "No roles to take!");
+                return;
+            }
+            String input = (String) JOptionPane.showInputDialog(null, "Choose a role to take",
+                    "Move", JOptionPane.QUESTION_MESSAGE, null, options.toArray(), options.get(0));
+            //for ()
 
+            for (Roles r : offCard) {
+                if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
+                    if (takeRole(curPly, r))
+                        endturn();
+                }
+            }
+            for (Roles r : onCard) {
+                if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
+                    if (takeRole(curPly, r))
+                        endturn();
+                }
+            }
 
         }
 

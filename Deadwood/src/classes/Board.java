@@ -32,18 +32,21 @@ public class Board {
         }
     }
 
-    private void updateLocations(Set set) {
+    public void updateLocations(Set set) {
         int numOfPlayersOffCard = 0;
         for (int i = 0; i < players.length; i++) {
-            if (players[i].getlocation() == set && players[i].getRole() == null) {
-                if (numOfPlayersOffCard * players[i].getWidth() > set.getWidth()) {
-                    players[i].setLocation(set.getX() + (numOfPlayersOffCard - 1 - set.getWidth()/players[i].getWidth()) * players[i].getWidth(),
-                            set.getY() + players[i].getHeight());
+            if (players[i].getlocation() == set) {
+                if (players[i].getRole() == null) {
+                    if (numOfPlayersOffCard * players[i].getWidth() > set.getWidth()) {
+                        players[i].setLocation(set.getX() + (numOfPlayersOffCard - 1 - set.getWidth() / players[i].getWidth()) * players[i].getWidth(),
+                                set.getY() + players[i].getHeight());
+                    } else
+                        players[i].setLocation(set.getX() + numOfPlayersOffCard * players[i].getWidth(),
+                                set.getY());
+                    numOfPlayersOffCard++;
+                } else {
+                    //
                 }
-                else
-                    players[i].setLocation(set.getX() + numOfPlayersOffCard * players[i].getWidth(),
-                            set.getY());
-                numOfPlayersOffCard++;
             }
         }
     }

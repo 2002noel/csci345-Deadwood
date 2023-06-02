@@ -220,7 +220,7 @@ public class Player extends JLabel {
     };
 
     public boolean takeRole() {
-        return Systems.getInstance().takeRole(this);
+        return false;//Systems.getInstance().takeRole(this);
     };
 
     public void addMoney(int money) {
