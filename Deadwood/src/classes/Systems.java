@@ -497,12 +497,33 @@ public class Systems {
                 JOptionPane.showMessageDialog(gameFrame, "You can't act without a role!");
             }else{
                 endturn();
+            } 
+        }else if(choice.equals("Move")){
+            
+            Set location[] = players[curTurn].getlocation().getAdjacentSet();
+            //have a popup that shows the adjacent sets and ask which set they want to move to
+            String[] options = new String[location.length];
+            for (int i = 0; i < location.length; i++) {
+                options[i] = location[i].getName();
             }
-                
+            String input = (String) JOptionPane.showInputDialog(null, "Choose a location to move to",
+                    "Move", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            //System.out.println(input);
+            //move the player to the location chosen
+            for (int i = 0; i < location.length; i++) {
+                if(input.equals(location[i].getName())){
+                    players[curTurn].move(location[i]);
+                    break;
+                }
+            }
+            endturn();
+            
+
             
             
 
-        
+
+        }
 
 
 

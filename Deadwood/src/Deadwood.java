@@ -114,17 +114,8 @@ public class Deadwood {
             lastday = 3;
         }
 
-        while(game.getDay() < lastday){
-            //start the day
-            game.startDay();
-            //start the game
-            game.startGame();
+        game.setLastDay(lastday);
 
-        }
-
-        game.endgame();
-
-        Systems.scan.close();
-
+        game.startGame();
     }
 }
