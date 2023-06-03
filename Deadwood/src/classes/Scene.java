@@ -30,7 +30,6 @@ public class Scene extends JLabel {
 
     public void setCardID(int num) {
         cardID = num;
-        System.out.println("./images/cards/" + (cardID < 10 ? "0" : "") + cardID + ".png");
         try {
             BufferedImage myPicture = ImageIO.read(new File("./images/cards/" + (cardID < 10 ? "0" : "") + cardID + ".png"));
             setIcon(new ImageIcon(myPicture));
