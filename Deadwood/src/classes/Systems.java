@@ -306,7 +306,7 @@ public class Systems {
 
     public void finishScene() {
         scenesLeft--;
-        if(scenesLeft < 1){
+        if(scenesLeft <= 1){
             endDay();
         }
 
