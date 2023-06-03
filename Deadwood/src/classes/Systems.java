@@ -21,7 +21,6 @@ public class Systems {
     private int scenesLeft;
     private int lastday;
 
-    public static Scanner scan;
     public Die die;
     public Board board;
     private JPanel gamePanel;
@@ -37,7 +36,6 @@ public class Systems {
         day = 1;
         curTurn = 0;
         die = new Die();
-        scan = new Scanner(System.in);
         scenesLeft = 10;
     }
 
@@ -257,7 +255,7 @@ public class Systems {
         }
 
         //popup that says acting failed
-        JOptionPane.showMessageDialog(null, "Acting was a failure");
+        JOptionPane.showMessageDialog(null, "Acting was a failure!");
         return true;
         // check how many scenes are left on the board, if there are 1 or less, end the
         // day
