@@ -595,9 +595,11 @@ public class Systems {
                 JOptionPane.showMessageDialog(null, "No roles to take!");
                 return;
             }
-            String input = (String) JOptionPane.showInputDialog(gameFrame, "Choose a role to take",
-                    "Move", JOptionPane.QUESTION_MESSAGE, null, options.toArray(), options.get(0));
-            //for ()
+            String input = options.get(0);
+            if (options.size() > 1) {
+                input = (String) JOptionPane.showInputDialog(gameFrame, "Choose a role to take",
+                        "Move", JOptionPane.QUESTION_MESSAGE, null, options.toArray(), options.get(0));
+            }
 
             for (Roles r : offCard) {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
