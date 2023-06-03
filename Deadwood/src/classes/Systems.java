@@ -505,7 +505,13 @@ public class Systems {
         playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
         playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
         playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
-        playerPanel.add(new JLabel("Role: " + players[curTurn].getRole()));
+        if(players[curTurn].getRole() != null){
+            //rehersal tokens
+            playerPanel.add(new JLabel("Role: " + players[curTurn].getRole().getName()));
+            playerPanel.add(new JLabel("Rehearsal Tokens: " + players[curTurn].getChips()));
+        }else{
+            playerPanel.add(new JLabel("Role: None"));
+        }
         setVisibleOptions();
         gamePanel.revalidate();
         gamePanel.repaint();
@@ -588,7 +594,7 @@ public class Systems {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
                     if (takeRole(curPly, r)) {
                         endturn();
-                        return;
+                        
                     }
                 }
             }
@@ -596,7 +602,6 @@ public class Systems {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
                     if (takeRole(curPly, r)) {
                         endturn();
-                        return;
                     }
                 }
             }
