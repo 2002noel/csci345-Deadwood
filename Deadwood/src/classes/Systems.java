@@ -478,7 +478,7 @@ public class Systems {
                     break;
                 }
             }
-            if (curPly.getlocation().isSpecial()) {
+            if (curPly.getlocation().isSpecial() || curPly.getlocation().getScene() == null) {
                 endturn();
                 return;
             }
