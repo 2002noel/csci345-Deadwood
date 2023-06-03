@@ -1,11 +1,16 @@
 package classes;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Set extends JButton {
 
     private int shotsLeft;
+    ArrayList<JLabel> shotLabelList;
     public Scene scene;
     private String name;
     private Set adjacentSets[] = new Set[1];
@@ -16,6 +21,7 @@ public class Set extends JButton {
         setContentAreaFilled(false);
         setBorderPainted(false);
         setVisible(false);
+        shotLabelList = new ArrayList<>();
     }
 
     public Set(String name) {
@@ -27,6 +33,17 @@ public class Set extends JButton {
         this();
         this.name = name;
         shotsLeft = numShots;
+        for (int i = 0; i < shotsLeft; i++) {
+            try {
+                BufferedImage myPicture = ImageIO.read(new File("./images/shot.png"));
+                JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+                picLabel.setSize(42, 42);
+                picLabel.setVisible(false);
+                shotLabelList.add(picLabel);
+            } catch (Exception e) {
+                System.exit(1);
+            }
+        }
     }
     
     public Set(String name, Scene scene) {
@@ -75,6 +92,10 @@ public class Set extends JButton {
 
     public Set[] getAdjacentSet() {
         return adjacentSets;
+    }
+
+    public ArrayList<JLabel> getShotLabelList() {
+        return shotLabelList;
     }
 
     public void finishScene() {
@@ -145,6 +166,7 @@ public class Set extends JButton {
         //if shotsLeft == 0, call finishScene
 
         this.shotsLeft -= 1;
+        shotLabelList.get(shotsLeft).setVisible(true);
         if (this.shotsLeft == 0){
             this.finishScene();
         }

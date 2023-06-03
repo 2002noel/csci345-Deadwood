@@ -244,6 +244,21 @@ public class Board {
                         s.setSize(Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue()), Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue()));
                         continue;
                     }
+                    if (cname.equals("takes")) {
+                        NodeList takes = sub.getChildNodes();
+                        System.out.println(takes.getLength());
+                        int realInd = 0;
+                        for (int takeInd = 0; takeInd < takes.getLength(); takeInd++) {
+                            Node part = takes.item(takeInd);
+                            if (!part.getNodeName().equals("take"))
+                                continue;
+                            Element area = (Element)part.getChildNodes().item(0);
+                            s.getShotLabelList().get(realInd).setLocation(Integer.parseInt(area.getAttribute("x")), Integer.parseInt(area.getAttribute("y")));
+                            Systems.getInstance().getBoardPanel().add(s.getShotLabelList().get(realInd));
+                            realInd++;
+                        }
+                        continue;
+                    }
                     if (cname.equals("parts")) {
                         NodeList parts = sub.getChildNodes();
                         Roles[] rArr = new Roles[(int) Math.floor(parts.getLength() / 2.0)];
