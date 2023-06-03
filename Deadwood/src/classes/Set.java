@@ -99,7 +99,6 @@ public class Set extends JButton {
     }
 
     public void finishScene() {
-        Systems.getInstance().finishScene();
         System.out.println("That's a wrap!");
         boolean shouldPay = false;
         int amountToPay = scene.getBudget();
@@ -159,6 +158,7 @@ public class Set extends JButton {
         }
         Systems.getInstance().getBoardPanel().remove(scene);
         scene = null;
+        Systems.getInstance().finishScene();
     }
 
     public void finishShot(){

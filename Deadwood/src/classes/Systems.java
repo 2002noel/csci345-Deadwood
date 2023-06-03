@@ -303,11 +303,12 @@ public class Systems {
         if(day > lastday){
             endgame();
         }
+        startDay();
     }
 
     public void finishScene() {
         scenesLeft--;
-        if(scenesLeft <= 1){
+        if(scenesLeft < 1){
             endDay();
         }
 
