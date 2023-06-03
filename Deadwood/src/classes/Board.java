@@ -4,6 +4,7 @@ import org.w3c.dom.*;
 import javax.swing.*;
 import javax.xml.parsers.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -49,7 +50,10 @@ public class Board {
                                 set.getY());
                     numOfPlayersOffCard++;
                 } else {
-                    players[i].setLocation(players[i].getRole().getX() + players[i].getlocation().getX(), players[i].getRole().getY() + players[i].getlocation().getY());
+                    if (Arrays.asList(players[i].getlocation().getRoles()).contains(players[i].getRole()))
+                        players[i].setLocation(players[i].getRole().getLocation());
+                    else
+                        players[i].setLocation(players[i].getRole().getX() + players[i].getlocation().getX(), players[i].getRole().getY() + players[i].getlocation().getY());
                 }
             }
         }
@@ -132,8 +136,8 @@ public class Board {
                     int roleLevel = Integer.parseInt(partElement.getAttribute("level"));
                     roles[j] = new Roles(roleName, roleLevel);
                     Element ele = (Element) partElement.getElementsByTagName("area").item(0);
-                    scenes[i].add(roles[j]);
                     roles[j].setLocation(Integer.parseInt(ele.getAttribute("x")), Integer.parseInt(ele.getAttribute("y")));
+                    scenes[i].add(roles[j]);
                 }
 
                 scenes[i].setDescription(description);
@@ -251,6 +255,8 @@ public class Board {
                             NamedNodeMap attribs = part.getAttributes();
                             rArr[realIndex] = new Roles(attribs.getNamedItem("name").getNodeValue()
                                 , Integer.parseInt(attribs.getNamedItem("level").getNodeValue()));
+                            Element areaNode = (Element)((Element)part).getElementsByTagName("area").item(0);
+                            rArr[realIndex].setLocation(Integer.parseInt(areaNode.getAttributes().getNamedItem("x").getNodeValue()), Integer.parseInt(areaNode.getAttributes().getNamedItem("y").getNodeValue()));
                             realIndex++;
                         }
                         s.setRoles(rArr);
