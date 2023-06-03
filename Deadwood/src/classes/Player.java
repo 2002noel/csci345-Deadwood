@@ -67,7 +67,7 @@ public class Player extends JLabel {
         return false;
     };
 
-    public boolean useTurn(int choice) {
+    /*public boolean useTurn(int choice) {
         // if choice is 1, rehearse
         // if choice is 2, act
         // if choice is 3, upgrade
@@ -167,7 +167,7 @@ public class Player extends JLabel {
             return false;
         }
 
-    };
+    };*/
 
     public boolean rehearse() {
         // add to chips and return true
