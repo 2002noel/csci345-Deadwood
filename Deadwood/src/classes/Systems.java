@@ -127,22 +127,7 @@ public class Systems {
 
 
     }
-
-    public static boolean upgradeRank(Player ply, int rank, boolean withcredits) {
-        // check if the player has enough money to upgrade
-        // check if the player is at the casting office
-        // rank 2 costs 5 credits or 4 dollars
-        // rank 3 costs 10 credits or 10 dollars
-        // rank 4 costs 15 credits or 18 dollars
-        // rank 5 costs 20 credits or 28 dollars
-        // rank 6 costs 25 credits or 40 dollars
-
-        // if the player has enough money or credits, upgrade the player
-        // else return false
-        if (ply.getlocation().getName() != "Casting Office") {
-            return false;
-        }
-
+    public static int getCostOfRank(int rank, boolean withCredits) {
         int costincredits = 0;
         int costindollars = 0;
 
@@ -170,19 +155,39 @@ public class Systems {
             default:
                 break;
         }
+        if (withCredits)
+            return costincredits;
+        return costindollars;
+    }
+    public static boolean upgradeRank(Player ply, int rank, boolean withcredits) {
+        // check if the player has enough money to upgrade
+        // check if the player is at the casting office
+        // rank 2 costs 5 credits or 4 dollars
+        // rank 3 costs 10 credits or 10 dollars
+        // rank 4 costs 15 credits or 18 dollars
+        // rank 5 costs 20 credits or 28 dollars
+        // rank 6 costs 25 credits or 40 dollars
+
+        // if the player has enough money or credits, upgrade the player
+        // else return false
+        if (ply.getlocation().getName() != "Casting Office") {
+            return false;
+        }
 
         if (withcredits) {
-            if (ply.getCredits() >= costincredits) {
+            int costCredits = getCostOfRank(rank, withcredits);
+            if (ply.getCredits() >= costCredits) {
                 ply.getDice().setRank(rank);
                 ply.updateDiceImage();
-                ply.removeCredits(costincredits);
+                ply.removeCredits(costCredits);
                 return true;
             }
         } else {
-            if (ply.getMoney() >= costindollars) {
+            int costMoney = getCostOfRank(rank, withcredits);
+            if (ply.getMoney() >= costMoney) {
                 ply.getDice().setRank(rank);
                 ply.updateDiceImage();
-                ply.removeMoney(costindollars);
+                ply.removeMoney(costMoney);
                 return true;
             }
         }
@@ -264,78 +269,6 @@ public class Systems {
         ply.setRole(role);
         role.setIsTaken(ply);
         board.updateLocations(ply.getlocation());
-
-        /*// check if the player is on a role
-        if (ply.getRole() != null) {
-            System.out.println("You are already on a role");
-            return false;
-        }
-
-
-        // print all the available roles on the set and scene of the players location
-        // ask the player which role they want to take
-        // if the player chooses a role, set the player's role to the role
-        // else return false
-        Set set = ply.getlocation();
-        if (set == null || set.isSpecial()) {
-            System.out.println("You are not on a set");
-            return false;
-        }
-        System.out.println(set.getName());
-        Scene scene = set.getScene();
-        if (scene == null) {
-            System.err.println("!!!SET MISSING SCENE!!!");
-            return false;
-        }
-        System.out.println("Player rank: " + ply.getDice().getRank());
-        System.out.println("Available roles:");
-        /*for (Roles role : scene.getRoles()) {
-            // check if the role is taken, if it is, dont print, else print
-            if (role.getIsTaken() == null) {
-                System.out.println("\"" + role.getName() + "\"" + " Rank: " + role.getRank());
-            }
-        }
-        System.out.println("Extras:");
-        for (Roles role : set.getRoles()) {
-            // check if the role is taken, if it is, dont print, else print
-            if (role.getIsTaken() == null) {
-                System.out.println("\"" + role.getName() + "\"" + " Rank: " + role.getRank());
-            }
-        }
-
-        System.out.println("Which role would you like to take?");
-        String role = scan.nextLine();
-        for (Roles r : set.getRoles()) {
-            if (r.getName().equals(role)) {
-                if(r.getIsTaken() != null){
-                    System.out.println("Role is taken");
-                    return false;
-                }
-                if(r.getRank() > ply.getDice().getRank()){
-                    System.out.println("You do not have a high enough rank");
-                    return false;
-                }
-                ply.setRole(r);
-                r.setIsTaken(ply);
-                board.updateLocations(set);
-                return true;
-            }
-        }
-        for (Roles r2 : scene.getRoles()) {
-            if (r2.getName().equals(role)) {
-                if(r2.getIsTaken() != null){
-                    System.out.println("Role is taken");
-                    return false;
-                }
-                if(r2.getRank() > ply.getDice().getRank()) {
-                    System.out.println("You do not have a high enough rank");
-                    return false;
-                }
-                ply.setRole(r2);
-                r2.setIsTaken(ply);
-                return true;
-            }
-        }*/
         return true;
     }
 
@@ -414,82 +347,12 @@ public class Systems {
         playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
         playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
         playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
-        playerPanel.add(new JLabel("Role: " + players[curTurn].getRole()));
+        playerPanel.add(new JLabel("Role: None" ));
         gamePanel.add(playerPanel);
 
 
         gameFrame.pack();
         gamePanel.repaint();
-        // tell every player on the list to make a turn
-        /*while (true) {
-            for (Player ply : players) {
-                // ask a player what they want to do
-                // if choice is 1, rehearse
-                // if choice is 2, act
-                // if choice is 3, upgrade
-                // if choice is 4, move
-                // if choice is 5, take role
-                // if choice is 6, end turn
-                // if choice is 7, quit game
-                System.out.println("It is Player " + ply.getid() + "'s turn.");
-                System.out.println("You are at " + ply.getlocation().getName() + ".");
-                System.out.println("What would you like to do?");
-                System.out.println("1. Rehearse");
-                System.out.println("2. Act");
-                System.out.println("3. Upgrade");
-                System.out.println("4. Move");
-                System.out.println("5. Take Role");
-                System.out.println("6. End Turn");
-                System.out.println("7. End Game");
-                while(gameFrame != null) {
-                    gamePanel.paintImmediately(0, 0, gamePanel.getWidth(), gamePanel.getHeight());
-                    System.out.println("loop");
-                }
-
-                int choice = Systems.getIntFromUser();
-    
-                if(choice == 7){
-                    this.day = 5;
-                    endgame();
-                    return;
-                }
-    
-    
-                boolean valid = ply.useTurn(choice);
-    
-                while (!valid) {
-                    System.out.println("Invalid choice, please try again.");
-                    System.out.println("What would you like to do?");
-                    System.out.println("1. Rehearse");
-                    System.out.println("2. Act");
-                    System.out.println("3. Upgrade");
-                    System.out.println("4. Move");
-                    System.out.println("5. Take Role");
-                    System.out.println("6. End Turn");
-                    System.out.println("7. Quit Game");
-                    choice = Systems.getIntFromUser();
-    
-                    if(choice == 7){
-                        this.day = 5;
-                        endgame();
-                        return;
-                    }
-    
-                    valid = ply.useTurn(choice);
-                }
-    
-                //check how many scenes are left on the board, if there are 1 or less, end the day
-                if(scenesLeft < 1) {
-                    System.out.println("All scenes are finished!");
-                    endDay();
-                    return;
-                }
-            }
-
-        }*/
-
-        //scan.close();
-
     }
 
     private void setVisibleOptions() {
@@ -504,7 +367,7 @@ public class Systems {
             if (curPly.getRole() == null && (butt.getText() == "Act" || butt.getText() == "Rehearse"))
                 butt.setVisible(false);
             if (butt.getText() == "Upgrade") {
-                if (curPly.getlocation().getName() == "Casting Office")
+                if (curPly.getlocation().getName() == "Casting Office" && curPly.getDice().getRank() < 6)
                     butt.setVisible(true);
                 else
                     butt.setVisible(false);
@@ -535,10 +398,12 @@ public class Systems {
         }else{
             playerPanel.add(new JLabel("Role: None"));
         }
+        gameFrame.pack();
         setVisibleOptions();
         gamePanel.revalidate();
         gamePanel.repaint();
     }
+
 
     public void handleChoice(String choice) {
         Player curPly = players[curTurn];
@@ -564,8 +429,46 @@ public class Systems {
             }else{
                 endturn();
             } 
+        }else if(choice.equals("Upgrade")) {
+            if (curPly.getlocation().getName() != "Casting Office")
+                return;
+            JCheckBox checkbox = new JCheckBox("Use credits to upgrade");
+            String message = "Select rank to upgrade to";
+            Object[] params = {message, checkbox};
+            ArrayList<String> options = new ArrayList<>();
+            for (int i = curPly.getDice().getRank() + 1; i <= 6; i++) {
+                String opt = i + "";
+                int credsReq = getCostOfRank(i, true);
+                int moneyReq = getCostOfRank(i, false);
+
+                if (credsReq > curPly.getCredits() && moneyReq > curPly.getMoney())
+                    break;
+
+                if (credsReq <= curPly.getCredits())
+                    opt = opt + " | " + credsReq + "C";
+                if (moneyReq <= curPly.getMoney())
+                    opt = opt + " | $" + credsReq;
+                options.add(opt);
+            }
+            if (options.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Not enough credits or money to upgrade");
+                return;
+            }
+            String input = (String) JOptionPane.showInputDialog(null, params,
+                    "Upgrade Rank", JOptionPane.QUESTION_MESSAGE, null, options.toArray(), options.get(0));
+            boolean useCredits = checkbox.isSelected();
+            for (int i = 2; i <= 6; i++) {
+                if (input.charAt(0) == ('0' + i)) {
+                    if (upgradeRank(curPly, i, useCredits)) {
+                        endturn();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Not enough " + (useCredits ? "credits" : "money") + " to upgrade");
+                        return;
+                    }
+                }
+            }
+
         }else if(choice.equals("Move")){
-            
             Set location[] = curPly.getlocation().getAdjacentSet();
             //have a popup that shows the adjacent sets and ask which set they want to move to
             String[] options = new String[location.length];
