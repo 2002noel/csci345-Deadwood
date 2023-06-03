@@ -321,6 +321,20 @@ public class Systems {
             "End Game"
     };
 
+    private void createPlayerStats() {
+        playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
+        playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
+        playerPanel.add(new JLabel("Credits: " + players[curTurn].getCredits()));
+        playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
+        if(players[curTurn].getRole() != null){
+            //rehersal tokens
+            playerPanel.add(new JLabel("Role: " + players[curTurn].getRole().getName()));
+            playerPanel.add(new JLabel("Rehearsal Tokens: " + players[curTurn].getChips()));
+        }else{
+            playerPanel.add(new JLabel("Role: None"));
+        }
+    }
+
     JPanel buttonPanel;
     public void startGame() {
         startDay();
@@ -343,10 +357,7 @@ public class Systems {
 
         playerPanel = new JPanel();
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-        playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
-        playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
-        playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
-        playerPanel.add(new JLabel("Role: None" ));
+        createPlayerStats();
         gamePanel.add(playerPanel);
 
 
@@ -387,16 +398,7 @@ public class Systems {
         curTurn = (curTurn + 1) % players.length;
         //set playerpanel to the players[curturn]'s info and display it
         playerPanel.removeAll();
-        playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
-        playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
-        playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
-        if(players[curTurn].getRole() != null){
-            //rehersal tokens
-            playerPanel.add(new JLabel("Role: " + players[curTurn].getRole().getName()));
-            playerPanel.add(new JLabel("Rehearsal Tokens: " + players[curTurn].getChips()));
-        }else{
-            playerPanel.add(new JLabel("Role: None"));
-        }
+        createPlayerStats();
         gameFrame.pack();
         setVisibleOptions();
         gamePanel.revalidate();
