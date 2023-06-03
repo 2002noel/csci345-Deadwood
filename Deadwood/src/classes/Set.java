@@ -119,6 +119,7 @@ public class Set extends JButton {
                 if (ply != null) {
                     ply.removeChips();
                     ply.addMoney(r.getRank());
+                    ply.setRole(null);
                     //r.setIsTaken(null);
                     System.out.println("Paying out $" + r.getRank() + " to player " + ply.getid());
                 }

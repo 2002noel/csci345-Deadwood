@@ -167,11 +167,15 @@ public class Systems {
 
         if (withcredits) {
             if (ply.getCredits() >= costincredits) {
+                ply.getDice().setRank(rank);
+                ply.updateDiceImage();
                 ply.removeCredits(costincredits);
                 return true;
             }
         } else {
             if (ply.getMoney() >= costindollars) {
+                ply.getDice().setRank(rank);
+                ply.updateDiceImage();
                 ply.removeMoney(costindollars);
                 return true;
             }
@@ -207,7 +211,6 @@ public class Systems {
             // call finish shot
             for (Roles r : ply.getlocation().getRoles()) {
                 if (r.equals(ply.getRole())) {
-                    ply.getlocation().finishShot();
                     ply.addCredits(1);
                     ply.addMoney(1);
                     System.out.println("Success! Gained 1 credit and 1 dollar");
@@ -220,7 +223,6 @@ public class Systems {
 
             for (Roles r : ply.getlocation().getScene().getRoles()) {
                 if (r.equals(ply.getRole())) {
-                    ply.getlocation().finishShot();
                     ply.addCredits(2);
                     System.out.println("Success! Gained 2 credits");
                     ply.getlocation().finishShot();
@@ -230,7 +232,7 @@ public class Systems {
 
             System.err.println("PLAYER ATTEMPTING ACT ON WRONG LOCATION");
             return false;
-        }else{
+        }
             //have a popup saying acting failed
         
         for (Roles r : ply.getlocation().getRoles()) {
@@ -245,7 +247,6 @@ public class Systems {
         //popup that says acting failed
         JOptionPane.showMessageDialog(null, "Acting was a failure");
         return true;
-    }
         // check how many scenes are left on the board, if there are 1 or less, end the
         // day
     }
@@ -602,7 +603,7 @@ public class Systems {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
                     if (takeRole(curPly, r)) {
                         endturn();
-                        
+                        return;
                     }
                 }
             }
@@ -610,6 +611,7 @@ public class Systems {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
                     if (takeRole(curPly, r)) {
                         endturn();
+                        return;
                     }
                 }
             }
