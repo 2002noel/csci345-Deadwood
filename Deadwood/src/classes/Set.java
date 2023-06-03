@@ -124,7 +124,8 @@ public class Set extends JButton {
                 }
             }
         } else {
-            System.out.println("No players on card so scene doesn't pay out");
+            //popup window saying no one was on the scene so no one gets an extra payout
+            JOptionPane.showMessageDialog(null, "No one was on the scene so no one gets an extra payout");
             for (Roles r : roles) {
                 Player ply = r.getIsTaken();
                 if (ply != null) {

@@ -207,6 +207,10 @@ public class Player extends JLabel {
         return money;
     };
 
+    public int getChips() {
+        return chips;
+    };
+
     public void removeChips() {
         this.chips = 0;
     };

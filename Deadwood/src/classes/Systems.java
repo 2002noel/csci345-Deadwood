@@ -200,6 +200,7 @@ public class Systems {
         // else pay nothing
         if (ply.getRole() == null)
             return false;
+        
             
         if (ply.getlocation().getScene().getBudget() <= roll) {
             // pay players on the scene
@@ -210,6 +211,8 @@ public class Systems {
                     ply.addCredits(1);
                     ply.addMoney(1);
                     System.out.println("Success! Gained 1 credit and 1 dollar");
+                    //have a popup saying acting was success
+                    JOptionPane.showMessageDialog(null, "Acting was a success! Gained 1 credit and 1 dollar");
                     ply.getlocation().finishShot();
                     return true;
                 }
@@ -227,17 +230,22 @@ public class Systems {
 
             System.err.println("PLAYER ATTEMPTING ACT ON WRONG LOCATION");
             return false;
-        }
-
-        System.out.println("Acting failed");
+        }else{
+            //have a popup saying acting failed
+        
         for (Roles r : ply.getlocation().getRoles()) {
             if (r.equals(ply.getRole())) {
                 ply.addMoney(1);
-                System.out.println("Gained 1 dollar");
+                //have a popup saying acting was failure but since you're an extra you get a dollar
+                JOptionPane.showMessageDialog(null, "Acting was a failure but since you're an extra you get a dollar");
                 return true;
             }
         }
+
+        //popup that says acting failed
+        JOptionPane.showMessageDialog(null, "Acting was a failure");
         return true;
+    }
         // check how many scenes are left on the board, if there are 1 or less, end the
         // day
     }
@@ -505,7 +513,13 @@ public class Systems {
         playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
         playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
         playerPanel.add(new JLabel("Rank: " + players[curTurn].getDice().getRank()));
-        playerPanel.add(new JLabel("Role: " + players[curTurn].getRole()));
+        if(players[curTurn].getRole() != null){
+            //rehersal tokens
+            playerPanel.add(new JLabel("Role: " + players[curTurn].getRole().getName()));
+            playerPanel.add(new JLabel("Rehearsal Tokens: " + players[curTurn].getChips()));
+        }else{
+            playerPanel.add(new JLabel("Role: None"));
+        }
         setVisibleOptions();
         gamePanel.revalidate();
         gamePanel.repaint();
@@ -588,7 +602,7 @@ public class Systems {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
                     if (takeRole(curPly, r)) {
                         endturn();
-                        return;
+                        
                     }
                 }
             }
@@ -596,7 +610,6 @@ public class Systems {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
                     if (takeRole(curPly, r)) {
                         endturn();
-                        return;
                     }
                 }
             }
