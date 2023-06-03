@@ -41,15 +41,19 @@ public class Player extends JLabel {
             return dice.rollDie() + chips;
     };
 
-    public void setid(int id) {
-        this.id = id;
+    public void updateDiceImage() {
         try {
-            BufferedImage myPicture = ImageIO.read(new File("./images/dice/" + idToColor[id - 1] + "1.png"));
+            BufferedImage myPicture = ImageIO.read(new File("./images/dice/" + idToColor[id - 1] + dice.getRank() + ".png"));
             setIcon(new ImageIcon(myPicture));
             setSize(40, 40);
         } catch (Exception e) {
             System.exit(1);
         }
+    }
+
+    public void setid(int id) {
+        this.id = id;
+        updateDiceImage();
     }
 
     public int getid() {
