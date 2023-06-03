@@ -300,10 +300,17 @@ public class Systems {
     public void endDay() {
         // add 1 to the day counter
         day++;
+        if(day > lastday){
+            endgame();
+        }
     }
 
     public void finishScene() {
         scenesLeft--;
+        if(scenesLeft <= 1){
+            endDay();
+        }
+
     }
     static String[] choices = {
             "Rehearse",
