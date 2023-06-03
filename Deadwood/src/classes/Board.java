@@ -49,7 +49,7 @@ public class Board {
                                 set.getY());
                     numOfPlayersOffCard++;
                 } else {
-                    //
+                    players[i].setLocation(players[i].getRole().getX() + players[i].getlocation().getX(), players[i].getRole().getY() + players[i].getlocation().getY());
                 }
             }
         }
@@ -123,19 +123,24 @@ public class Board {
                 NodeList partList = cardElement.getElementsByTagName("part");
                 int numRoles = partList.getLength();
                 Roles[] roles = new Roles[numRoles];
+                scenes[i] = new Scene(name, budget, sceneNum);
+                scenes[i].setCardID(i + 1);
 
                 for (int j = 0; j < numRoles; j++) {
                     Element partElement = (Element) partList.item(j);
                     String roleName = partElement.getAttribute("name");
                     int roleLevel = Integer.parseInt(partElement.getAttribute("level"));
                     roles[j] = new Roles(roleName, roleLevel);
+                    Element ele = (Element) partElement.getElementsByTagName("area").item(0);
+                    scenes[i].add(roles[j]);
+                    roles[j].setLocation(Integer.parseInt(ele.getAttribute("x")), Integer.parseInt(ele.getAttribute("y")));
                 }
 
-                scenes[i] = new Scene(name, budget, sceneNum);
                 scenes[i].setDescription(description);
                 scenes[i].setRoles(roles);
             }
         } catch (Exception e) {
+            System.err.println(e);
         }
     }
 
