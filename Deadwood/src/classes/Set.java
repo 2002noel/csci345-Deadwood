@@ -124,6 +124,7 @@ public class Set extends JButton {
             for (int i = 0; i < amountToPay; i++) {
                 payout[i] = Systems.getInstance().die.rollDie();
             }
+            int[] playerReceived = new int[8];
             Arrays.sort(payout); // must be sorted from least to greatest
             Roles[] onCard = scene.getRoles();
             int rolesIndex = onCard.length;
@@ -133,6 +134,7 @@ public class Set extends JButton {
                 if (ply != null) {
                     amountToPay--;
                     System.out.println("Paying out $" + payout[amountToPay] + " to player " + ply.getid());
+                    playerReceived[ply.getid() - 1] += payout[amountToPay];
                     ply.addMoney(payout[amountToPay]);
                 }
                 if (rolesIndex == 0) {
@@ -149,8 +151,18 @@ public class Set extends JButton {
                     ply.setRole(null);
                     //r.setIsTaken(null);
                     System.out.println("Paying out $" + r.getRank() + " to player " + ply.getid());
+                    playerReceived[ply.getid() - 1] += r.getRank();
                 }
             }
+            String payoutStr = "";
+            for (int i = 0; i < playerReceived.length; i++) {
+                if (playerReceived[i] != 0) {
+                    payoutStr += "Paying out $";
+                    payoutStr += playerReceived[i];
+                    payoutStr += " to player " + (i + 1) + "\n";
+                }
+            }
+            JOptionPane.showMessageDialog(null, payoutStr);
         } else {
             //popup window saying no one was on the scene so no one gets an extra payout
             JOptionPane.showMessageDialog(null, "No one was on the scene so no one gets an extra payout");
