@@ -538,7 +538,7 @@ public class Systems {
             boolean fin = players[curTurn].rehearse();
             if(!fin){
                 //have a popup that says you can't rehearse without a role
-                JOptionPane.showMessageDialog(gameFrame, "You can't rehearse without a role!");
+                JOptionPane.showMessageDialog(null, "You can't rehearse without a role!");
             }else{
                 endturn();
             }
@@ -546,7 +546,7 @@ public class Systems {
             boolean fin = players[curTurn].act();
             if(!fin){
                 //have a popup that says you can't act without a role
-                JOptionPane.showMessageDialog(gameFrame, "You can't act without a role!");
+                JOptionPane.showMessageDialog(null, "You can't act without a role!");
             }else{
                 endturn();
             } 
@@ -597,7 +597,7 @@ public class Systems {
             }
             String input = options.get(0);
             if (options.size() > 1) {
-                input = (String) JOptionPane.showInputDialog(gameFrame, "Choose a role to take",
+                input = (String) JOptionPane.showInputDialog(null, "Choose a role to take",
                         "Move", JOptionPane.QUESTION_MESSAGE, null, options.toArray(), options.get(0));
             }
 
