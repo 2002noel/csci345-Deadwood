@@ -10,6 +10,7 @@ import java.util.Arrays;
 public class Set extends JButton {
 
     private int shotsLeft;
+    private int shotAmount;
     ArrayList<JLabel> shotLabelList;
     public Scene scene;
     private String name;
@@ -33,6 +34,7 @@ public class Set extends JButton {
         this();
         this.name = name;
         shotsLeft = numShots;
+        shotAmount = numShots;
         for (int i = 0; i < shotsLeft; i++) {
             try {
                 BufferedImage myPicture = ImageIO.read(new File("./images/shot.png"));
@@ -55,6 +57,11 @@ public class Set extends JButton {
     //getter and setter for scene
 
     public void setScene(Scene scene){
+        for (JLabel shotLabel : shotLabelList)
+            shotLabel.setVisible(false);
+        shotsLeft = shotAmount;
+        for (Roles role : roles)
+            role.setIsTaken(null);
         this.scene = scene;
     }
 
