@@ -118,8 +118,14 @@ public class Systems {
                 winner = i;
             }
         }
-        System.out.println("The winner is player " + (winner+1) + " with a score of " + max);
+
+        //have a pop up window with the winner and their score, money, credits, and rank
+        JOptionPane.showMessageDialog(null, "Player " + (winner+1) + " is the winner with a score of " + max + "!\nRank: " + players[winner].getDice().getRank() + "\nCredits: " + players[winner].getCredits() + "\nDollars: " + players[winner].getMoney());
+
+        //pressing ok will exit the game
         System.exit(0);
+
+
     }
 
     public static boolean upgradeRank(Player ply, int rank, boolean withcredits) {
