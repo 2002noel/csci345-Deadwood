@@ -88,6 +88,7 @@ public class Set extends JButton {
                 shouldPay = true;
                 ply.removeChips();
                 ply.setRole(null);
+                //r.setIsTaken(null);
             }
         }
 
@@ -97,18 +98,18 @@ public class Set extends JButton {
                 payout[i] = Systems.getInstance().die.rollDie();
             }
             Arrays.sort(payout); // must be sorted from least to greatest
-            Roles[] roles = scene.getRoles();
-            int rolesIndex = roles.length;
+            Roles[] onCard = scene.getRoles();
+            int rolesIndex = onCard.length;
             while (amountToPay > 0) { // assumes that roles are ordered least rank to greatest rank
                 rolesIndex--;
-                Player ply = roles[rolesIndex].getIsTaken();
+                Player ply = onCard[rolesIndex].getIsTaken();
                 if (ply != null) {
                     amountToPay--;
                     System.out.println("Paying out $" + payout[amountToPay] + " to player " + ply.getid());
                     ply.addMoney(payout[amountToPay]);
                 }
                 if (rolesIndex == 0) {
-                    rolesIndex = roles.length;
+                    rolesIndex = onCard.length;
                 }
             }
 
@@ -118,6 +119,7 @@ public class Set extends JButton {
                 if (ply != null) {
                     ply.removeChips();
                     ply.addMoney(r.getRank());
+                    //r.setIsTaken(null);
                     System.out.println("Paying out $" + r.getRank() + " to player " + ply.getid());
                 }
             }
@@ -128,9 +130,11 @@ public class Set extends JButton {
                 if (ply != null) {
                     ply.removeChips();
                     ply.setRole(null);
+                    //r.setIsTaken(null);
                 }
             }
         }
+        Systems.getInstance().getBoardPanel().remove(scene);
         scene = null;
     }
 

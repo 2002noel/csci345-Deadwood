@@ -476,8 +476,16 @@ public class Systems {
             butt.setVisible(true);
             if ((butt.getText() == "Take Role" || butt.getText() == "Act" || butt.getText() == "Rehearse") && curPly.getlocation().isSpecial())
                 butt.setVisible(false);
-            else if ((butt.getText() == "Move" || butt.getText() == "Take Role") && curPly.getRole() != null)
+            if ((butt.getText() == "Move" || butt.getText() == "Take Role") && curPly.getRole() != null)
                 butt.setVisible(false);
+            if (curPly.getRole() == null && (butt.getText() == "Act" || butt.getText() == "Rehearse"))
+                butt.setVisible(false);
+            if (butt.getText() == "Upgrade") {
+                if (curPly.getlocation().getName() == "Casting Office")
+                    butt.setVisible(true);
+                else
+                    butt.setVisible(false);
+            }
         }
     }
 
@@ -545,11 +553,17 @@ public class Systems {
                     break;
                 }
             }
-            //endturn();
-
+            if (curPly.getlocation().isSpecial()) {
+                endturn();
+                return;
+            }
             setVisibleOptions(new String[] {"End Turn", "Take Role"});
         } else if(choice.equals("Take Role")) {
             Roles[] offCard = curPly.getlocation().getRoles();
+            if (curPly.getlocation().getScene() == null) {
+                JOptionPane.showMessageDialog(null, "Scene already wrapped!");
+                return;
+            }
             Roles[] onCard = curPly.getlocation().getScene().getRoles();
             //have a popup that shows the adjacent sets and ask which set they want to move to
             ArrayList<String> options = new ArrayList<>();
@@ -558,27 +572,32 @@ public class Systems {
                     options.add(r.getName() + " | R" + r.getRank());
             }
             for (Roles r : onCard) {
+                System.out.println(r.getName() + ", " + r.getRank());
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank())
                     options.add(r.getName() + " | R" + r.getRank());
             }
             if (options.isEmpty()) {
-                JOptionPane.showMessageDialog(gameFrame, "No roles to take!");
+                JOptionPane.showMessageDialog(null, "No roles to take!");
                 return;
             }
-            String input = (String) JOptionPane.showInputDialog(null, "Choose a role to take",
+            String input = (String) JOptionPane.showInputDialog(gameFrame, "Choose a role to take",
                     "Move", JOptionPane.QUESTION_MESSAGE, null, options.toArray(), options.get(0));
             //for ()
 
             for (Roles r : offCard) {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
-                    if (takeRole(curPly, r))
+                    if (takeRole(curPly, r)) {
                         endturn();
+                        return;
+                    }
                 }
             }
             for (Roles r : onCard) {
                 if (r.getIsTaken() == null && r.getRank() <= curPly.getDice().getRank() && input.contains(r.getName())) {
-                    if (takeRole(curPly, r))
+                    if (takeRole(curPly, r)) {
                         endturn();
+                        return;
+                    }
                 }
             }
 
@@ -587,17 +606,5 @@ public class Systems {
 
 
 
-    }
-
-    public static int getIntFromUser() {
-        while (!scan.hasNextInt()) {
-            System.out.println("Invalid option. Please enter an integer.");
-            if (scan.hasNextLine())
-                scan.nextLine();
-        }
-        int ret = scan.nextInt();
-        if (scan.hasNextLine())
-            scan.nextLine();
-        return ret;
     }
 }

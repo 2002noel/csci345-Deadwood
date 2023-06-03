@@ -10,18 +10,13 @@ public class Scene extends JLabel {
     private String name;
     private String description;
     private int sceneNum;
+    private int cardID;
     private Roles[] roles;
     
     public Scene(String name, int budget, int sceneNum) {
         this.name = name;
         this.budget = budget;
         this.sceneNum = sceneNum;
-        try {
-            BufferedImage myPicture = ImageIO.read(new File("./images/cards/" + (sceneNum < 10 ? "0" : "") + sceneNum + ".png"));
-            setIcon(new ImageIcon(myPicture));
-        } catch (Exception e) {
-            System.exit(1);
-        }
     }
 
     //create the getters and setters for the class
@@ -31,6 +26,18 @@ public class Scene extends JLabel {
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public void setCardID(int num) {
+        cardID = num;
+        System.out.println("./images/cards/" + (cardID < 10 ? "0" : "") + cardID + ".png");
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("./images/cards/" + (cardID < 10 ? "0" : "") + cardID + ".png"));
+            setIcon(new ImageIcon(myPicture));
+            setSize(500, 500);
+        } catch (Exception e) {
+            System.exit(1);
+        }
     }
 
     public String getName(){

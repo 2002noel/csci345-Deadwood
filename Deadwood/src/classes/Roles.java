@@ -1,6 +1,8 @@
 package classes;
 
-public class Roles {
+import javax.swing.*;
+
+public class Roles extends JComponent {
     private int rank;
     private String name;
     private Player takenBy;
