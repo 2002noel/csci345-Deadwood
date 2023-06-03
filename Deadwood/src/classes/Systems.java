@@ -213,9 +213,9 @@ public class Systems {
                 if (r.equals(ply.getRole())) {
                     ply.addCredits(1);
                     ply.addMoney(1);
-                    System.out.println("Success! Gained 1 credit and 1 dollar");
+                    System.out.println("Success! Gained 1 credit and $1");
                     //have a popup saying acting was success
-                    JOptionPane.showMessageDialog(null, "Acting was a success! Gained 1 credit and 1 dollar");
+                    JOptionPane.showMessageDialog(null, "Acting was a success! Gained 1 credit and $1");
                     ply.getlocation().finishShot();
                     return true;
                 }
@@ -225,6 +225,7 @@ public class Systems {
                 if (r.equals(ply.getRole())) {
                     ply.addCredits(2);
                     System.out.println("Success! Gained 2 credits");
+                    JOptionPane.showMessageDialog(null, "Acting was a success! Gained 2 credits");
                     ply.getlocation().finishShot();
                     return true;
                 }
@@ -239,7 +240,7 @@ public class Systems {
             if (r.equals(ply.getRole())) {
                 ply.addMoney(1);
                 //have a popup saying acting was failure but since you're an extra you get a dollar
-                JOptionPane.showMessageDialog(null, "Acting was a failure but since you're an extra you get a dollar");
+                JOptionPane.showMessageDialog(null, "Acting was a failure! Since you're an extra, you get $1");
                 return true;
             }
         }
