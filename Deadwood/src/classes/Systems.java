@@ -299,6 +299,9 @@ public class Systems {
         if(day > lastday){
             endgame();
         }
+
+        JOptionPane.showMessageDialog(null, "Day's over!");
+
         startDay();
     }
 
@@ -488,6 +491,7 @@ public class Systems {
                 endturn();
                 return;
             }
+            curPly.getlocation().getCardBack().setVisible(false);
             setVisibleOptions(new String[] {"End Turn", "Take Role"});
         } else if(choice.equals("Take Role")) {
             Roles[] offCard = curPly.getlocation().getRoles();
