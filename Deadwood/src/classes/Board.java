@@ -27,6 +27,7 @@ public class Board {
         for (int i = 0; i < sets.length; i++) {
             int swapInd = rand.nextInt(scenesLeft);
             sets[i].setScene(scenes[swapInd]);
+            sets[i].getCardBack().setVisible(true);
             scenes[swapInd].setLocation(sets[i].getLocation());
             scenes[swapInd].setSize(sets[i].getSize());
             Systems.getInstance().getBoardPanel().add(scenes[swapInd]);
@@ -230,6 +231,7 @@ public class Board {
                 Node set = list.item(setInd);
                 String name = set.getAttributes().getNamedItem("name").getNodeValue();
                 Set s = getSetByName(name);
+                Systems.getInstance().getBoardPanel().add(s.getCardBack());
                 if (s == null) {
                     System.err.println("Couldn't find set " + name);
                     return;
