@@ -371,7 +371,7 @@ public class Systems {
         for (int i = 0; i < buttonPanel.getComponentCount(); i++) {
             JButton butt = (JButton) buttonPanel.getComponent(i);
             butt.setVisible(true);
-            if ((butt.getText() == "Take Role" || butt.getText() == "Act" || butt.getText() == "Rehearse") && curPly.getlocation().isSpecial())
+            if (butt.getText() == "Take Role" && (curPly.getlocation().isSpecial() || curPly.getlocation().getScene() == null))
                 butt.setVisible(false);
             if ((butt.getText() == "Move" || butt.getText() == "Take Role") && curPly.getRole() != null)
                 butt.setVisible(false);

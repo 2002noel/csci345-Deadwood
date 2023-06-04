@@ -43,8 +43,8 @@ public class Board {
         for (int i = 0; i < players.length; i++) {
             if (players[i].getlocation() == set) {
                 if (players[i].getRole() == null) {
-                    if (numOfPlayersOffCard * players[i].getWidth() > set.getWidth()) {
-                        players[i].setLocation(set.getX() + (numOfPlayersOffCard - 1 - set.getWidth() / players[i].getWidth()) * players[i].getWidth(),
+                    if ((numOfPlayersOffCard+1) * players[i].getWidth() > set.getWidth()) {
+                        players[i].setLocation(set.getX() + (numOfPlayersOffCard - set.getWidth() / players[i].getWidth()) * players[i].getWidth(),
                                 set.getY() + players[i].getHeight());
                     } else
                         players[i].setLocation(set.getX() + numOfPlayersOffCard * players[i].getWidth(),
