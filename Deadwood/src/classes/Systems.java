@@ -334,6 +334,9 @@ public class Systems {
         }else{
             playerPanel.add(new JLabel("Role: None"));
         }
+
+        //add the plalyer's dice image
+        playerPanel.add(new JLabel(players[curTurn].getIcon()));
     }
 
     JPanel buttonPanel;
