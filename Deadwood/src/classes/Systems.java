@@ -323,6 +323,8 @@ public class Systems {
     };
 
     private void createPlayerStats() {
+        //add the plalyer's dice image
+        playerPanel.add(new JLabel(players[curTurn].getIcon()));
         playerPanel.add(new JLabel("Player " + players[curTurn].getid()));
         playerPanel.add(new JLabel("Money: " + players[curTurn].getMoney()));
         playerPanel.add(new JLabel("Credits: " + players[curTurn].getCredits()));
@@ -334,9 +336,6 @@ public class Systems {
         }else{
             playerPanel.add(new JLabel("Role: None"));
         }
-
-        //add the plalyer's dice image
-        playerPanel.add(new JLabel(players[curTurn].getIcon()));
     }
 
     JPanel buttonPanel;
