@@ -11,7 +11,8 @@ public class Set extends JButton {
 
     private int shotsLeft;
     private int shotAmount;
-    ArrayList<JLabel> shotLabelList;
+    private ArrayList<JLabel> shotLabelList;
+    private JLabel cardBack;
     public Scene scene;
     private String name;
     private Set adjacentSets[] = new Set[1];
@@ -23,11 +24,28 @@ public class Set extends JButton {
         setBorderPainted(false);
         setVisible(false);
         shotLabelList = new ArrayList<>();
+        cardBack = new JLabel();
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("./images/cardback.jpg"));
+            cardBack.setIcon(new ImageIcon(myPicture));
+        } catch (Exception e) {
+            System.exit(1);
+        }
     }
 
     public Set(String name) {
         this();
         this.name = name;
+    }
+
+    public void setLocation(int x, int y) {
+        super.setLocation(x, y);
+        cardBack.setLocation(x, y);
+    }
+
+    public void setSize(int w, int h) {
+        super.setSize(w, h);
+        cardBack.setSize(w, h);
     }
     
     public Set(String name, int numShots) {
@@ -60,6 +78,7 @@ public class Set extends JButton {
         for (JLabel shotLabel : shotLabelList)
             shotLabel.setVisible(false);
         shotsLeft = shotAmount;
+        cardBack.setVisible(true);
         for (Roles role : roles)
             role.setIsTaken(null);
         this.scene = scene;
@@ -103,6 +122,10 @@ public class Set extends JButton {
 
     public ArrayList<JLabel> getShotLabelList() {
         return shotLabelList;
+    }
+
+    public JLabel getCardBack() {
+        return cardBack;
     }
 
     public void finishScene() {
