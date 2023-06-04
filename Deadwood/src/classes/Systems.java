@@ -279,8 +279,6 @@ public class Systems {
         // change all the players back to the trailer
         for (Player ply : players) {
             // from the board, get the trailer and set the player's location to the trailer
-            ply.setlocation(board.getSetByName("Trailers"));
-
             // reset the players roles
             ply.setRole(null);
 

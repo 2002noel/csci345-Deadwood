@@ -63,9 +63,10 @@ public class Board {
         for (int i = 0; i < players.length; i++) {
             if (players[i].equals(ply)) {
                 for (int k = 0; k < sets.length; k++) {
-                    if (set.equals(sets[k])) {
+                    if (set == sets[k]) {
                         location[i] = k;
                         ply.setLocation(set.getLocation());
+                        ply.setlocation(set);
                         updateLocations(set);
                         return true;
                     }
@@ -74,6 +75,7 @@ public class Board {
                     if (specialSets[k] == set) {
                         location[i] = sets.length + k;
                         ply.setLocation(set.getLocation());
+                        ply.setlocation(set);
                         updateLocations(set);
                         return true;
                     }
